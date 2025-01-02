@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lazish/pages/sign_in_page.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -80,52 +81,64 @@ class WelcomePage extends StatelessWidget {
             ),
             const Spacer(),
             // Buttons
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Xử lý khi nhấn nút "BẮT ĐẦU"
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff6949ff),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        // Xử lý khi nhấn nút "BẮT ĐẦU"
+                        
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xff6949ff),
+                          minimumSize: const Size(double.infinity, 55),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 0),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'BẮT ĐẦU',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  OutlinedButton(
-                    onPressed: () {
-                      // Xử lý khi nhấn nút "TÔI ĐÃ CÓ TÀI KHOẢN"
-                    },
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Color(0xff6949ff)),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'TÔI ĐÃ CÓ TÀI KHOẢN',
-                        style:
-                            TextStyle(fontSize: 18, color: Color(0xff6949ff)),
+                      child: const Center(
+                        child: Text(
+                          'BẮT ĐẦU',
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    OutlinedButton(
+                      onPressed: () {
+                        // Xử lý khi nhấn nút "TÔI ĐÃ CÓ TÀI KHOẢN"
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignInPage(),
+                                ),
+                        );
+                      },
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(color: Color(0xff6949ff)),
+                        minimumSize: const Size(double.infinity, 55),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'TÔI ĐÃ CÓ TÀI KHOẢN',
+                          style:
+                              TextStyle(fontSize: 18, color: Color(0xff6949ff)),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            const Spacer(),
+            const SizedBox(height: 40),
           ],
         ),
       ),
