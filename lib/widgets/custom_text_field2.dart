@@ -1,32 +1,30 @@
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatefulWidget {
+class CustomTextField2 extends StatefulWidget {
   final String hintText;
-  final String labelText; // Thêm label text
-  final IconData prefixIcon;
-  final bool isPassword;
+  final String labelText;
   final TextInputType keyboardType;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final bool isPassword;
 
-  const CustomTextField({
+  const CustomTextField2({
     super.key,
     required this.hintText,
-    required this.labelText, // Label text là tùy chọn
-    required this.prefixIcon,
-    this.isPassword = false,
+    required this.labelText,
     this.keyboardType = TextInputType.text,
+    this.isPassword = false,
     this.controller,
     this.validator,
   });
 
   @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
+  _CustomTextFieldState2 createState() => _CustomTextFieldState2();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
-  bool _obscureText = true;
+class _CustomTextFieldState2 extends State<CustomTextField2> {
   late TextEditingController _controller;
+  bool _obscureText = true;
   Color _enabledBorderColor = Colors.grey[300]!;
 
   @override
@@ -38,8 +36,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   void _updateBorderColor() {
     setState(() {
-      _enabledBorderColor =
-          _controller.text.isNotEmpty ? const Color(0xff6949ff) : Colors.grey[300]!;
+      _enabledBorderColor = _controller.text.isNotEmpty
+          ? const Color(0xff6949ff)
+          : Colors.grey[300]!;
     });
   }
 
@@ -55,25 +54,24 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start, // Căn trái label và input
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           widget.labelText,
           style: const TextStyle(
-            fontSize: 14, // Kích thước chữ của label
+            fontSize: 14,
             fontWeight: FontWeight.w500,
             color: Colors.black,
           ),
         ),
-        const SizedBox(height: 8), // Khoảng cách giữa label và TextFormField
+        const SizedBox(height: 8),
         TextFormField(
           controller: _controller,
-          obscureText: widget.isPassword ? _obscureText : false,
           keyboardType: widget.keyboardType,
+          obscureText: widget.isPassword ? _obscureText : false,
           validator: widget.validator,
           decoration: InputDecoration(
             hintText: widget.hintText,
-            prefixIcon: Icon(widget.prefixIcon, color: Colors.black),
             suffixIcon: widget.isPassword
                 ? IconButton(
                     icon: Icon(
@@ -88,7 +86,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   )
                 : null,
             hintStyle: const TextStyle(color: Colors.grey),
-           enabledBorder: UnderlineInputBorder(
+            enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: _enabledBorderColor),
             ),
             focusedBorder: const UnderlineInputBorder(

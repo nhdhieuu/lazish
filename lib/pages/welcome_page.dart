@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazish/pages/sign_in_page.dart';
+import 'package:lazish/pages/step_progress_page.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -31,7 +32,7 @@ class WelcomePage extends StatelessWidget {
                     ],
                   ),
                   child: const Text(
-                    'Hello, Hoang!',
+                    'Chào, Hiếu!',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -90,7 +91,12 @@ class WelcomePage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         // Xử lý khi nhấn nút "BẮT ĐẦU"
-                        
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => StepProgressPage(),
+                                ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff6949ff),
