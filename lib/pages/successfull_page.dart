@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lazish/pages/sign_in_page.dart';
 import 'package:lazish/pages/step_progress_page.dart';
 
 class SuccessfullPage extends StatelessWidget {
