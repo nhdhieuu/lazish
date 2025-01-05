@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lazish/pages/exercise_page.dart';
 import 'package:lazish/pages/home_page.dart';
 
 
@@ -15,7 +16,7 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
   // Danh sách các màn hình tương ứng với mỗi tab
   final List<Widget> _screens = [
     const Center(child: HomePage()),
-    const Center(child: Text("abc")),
+    const Center(child:ExercisePage()),
     Center(child: Text("abc")),
     const Center(child: Text("abc")),
     const Center(child: Text("abc")),
