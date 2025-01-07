@@ -2,7 +2,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class WordMatching extends StatefulWidget {
-  const WordMatching({super.key});
+  final VoidCallback onContinue;
+  const WordMatching({super.key, required this.onContinue});
 
   @override
   _WordMatchingState createState() => _WordMatchingState();
@@ -17,7 +18,9 @@ class _WordMatchingState extends State<WordMatching> {
     {"Không": "No"},
     {"Cái thìa": "Spoon"},
   ];
-
+  bool allMatched() {
+    return matchedPairs.length == wordPairs.length * 2;
+  }
   late List<String> vietnameseWords;
   late List<String> englishWords;
   String? selectedVietnamese;
@@ -42,7 +45,7 @@ class _WordMatchingState extends State<WordMatching> {
   void checkMatch() {
     if (selectedVietnamese != null && selectedEnglish != null) {
       bool isCorrect = wordPairs.any((pair) =>
-          pair.keys.first == selectedVietnamese &&
+      pair.keys.first == selectedVietnamese &&
           pair.values.first == selectedEnglish);
 
       setState(() {
@@ -205,10 +208,11 @@ class _WordMatchingState extends State<WordMatching> {
 
               // Check answer button
               ElevatedButton(
-                onPressed:
-                    (selectedVietnamese != null && selectedEnglish != null)
-                        ? checkMatch
-                        : null,
+                onPressed: allMatched()
+                    ? widget.onContinue
+                    : (selectedVietnamese != null && selectedEnglish != null)
+                    ? checkMatch
+                    : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF6949FF),
                   shape: RoundedRectangleBorder(
@@ -217,7 +221,7 @@ class _WordMatchingState extends State<WordMatching> {
                   minimumSize: Size(double.infinity, 50),
                 ),
                 child: Text(
-                  "Kiểm tra đáp án",
+                  allMatched() ? "Hoàn thành" : "Kiểm tra đáp án",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,

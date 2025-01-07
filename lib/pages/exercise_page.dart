@@ -100,7 +100,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 children: [
                   TranslationScreen(onContinue: nextPage),
                   SpeakingPage(onContinue: nextPage),
-                  WordMatching(),
+                  WordMatching(onContinue: nextPage),
 
                 ],
               ),
