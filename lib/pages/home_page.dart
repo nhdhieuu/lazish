@@ -12,10 +12,10 @@ class HomePage extends StatelessWidget {
         backgroundColor: const Color(0xff6949ff),
         elevation: 0,
         titleTextStyle: TextStyle(fontSize: 16),
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Quốc kỳ và EN
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

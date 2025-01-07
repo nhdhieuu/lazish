@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:lazish/pages/forgot_password_page.dart';
-import 'package:lazish/pages/main_layout_page.dart';
+import 'package:lazish/pages/otp_verification_page.dart';
+import 'package:lazish/pages/successfull_page.dart';
 import 'package:lazish/widgets/custom_text_field.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class CreateNewPasswordPage extends StatefulWidget {
+  const CreateNewPasswordPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<CreateNewPasswordPage> createState() => _CreateNewPasswordPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
-  final TextEditingController emailController = TextEditingController();
+class _CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   bool rememberMe = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,11 +47,22 @@ class _SignInPageState extends State<SignInPage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Xin chào 👋",
+                      "Tạo mật khẩu mới 🔒",
                       style: const TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                       ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: const Text(
+                    "Hãy lưu mật khẩu của bạn ở nơi an toàn, nếu bạn lỡ quên mất thì bạn sẽ phải thực hiện các bước để tạo lại mật khẩu.",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
                     ),
                   ),
                 ),
@@ -62,25 +72,24 @@ class _SignInPageState extends State<SignInPage> {
                   child: Column(
                     children: [
                       CustomTextField(
-                        labelText: "Email",
-                        hintText: "Nhập email của bạn",
-                        prefixIcon: Icons.email,
-                        keyboardType: TextInputType.emailAddress,
-                        controller: emailController,
-                      ),
-                      const SizedBox(height: 18),
-                      CustomTextField(
-                        labelText: "Mật khẩu",
+                        labelText: "Mật khẩu mới",
                         hintText: 'Nhập mật khẩu của bạn',
                         prefixIcon: Icons.lock,
                         isPassword: true,
                         controller: passwordController,
                       ),
                       const SizedBox(height: 18),
+                      CustomTextField(
+                        labelText: "Xác nhận mật khẩu",
+                        hintText: "Nhập lại mật khẩu",
+                        prefixIcon: Icons.lock,
+                        isPassword: true,
+                        controller: confirmPasswordController,
+                      ),
+                      const SizedBox(height: 18),
                     ],
                   ),
                 ),
-                // Dòng checkbox
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Row(
@@ -109,43 +118,6 @@ class _SignInPageState extends State<SignInPage> {
                     ],
                   ),
                 ),
-
-                const SizedBox(height: 18),
-                Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 25),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: Color.fromRGBO(
-                            243, 242, 242, 1), // Màu của đường viền
-                        width: 0.5, // Độ dày của đường viền
-                      ),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 18.0),
-                    // Khoảng cách giữa đường viền và nội dung bên dưới
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ForgotPasswordPage(),
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        "Quên mật khẩu?",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Color(0xff6949ff),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -153,11 +125,10 @@ class _SignInPageState extends State<SignInPage> {
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
             child: ElevatedButton(
               onPressed: () {
-                // Xử lý đăng nhập
-                Navigator.push(
+                Navigator.push<void>(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => MainLayoutPage(),
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const SuccessfullPage(),
                   ),
                 );
               },
@@ -171,7 +142,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
               child: const Center(
                 child: Text(
-                  'ĐĂNG NHẬP',
+                  'TIẾP TỤC',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),

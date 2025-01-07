@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lazish/pages/sign_in_page.dart';
 import 'package:lazish/pages/successfull_page.dart';
 import 'package:lazish/widgets/input_step_page.dart';
 import 'package:lazish/widgets/step_progress.dart';
@@ -120,8 +119,8 @@ class _StepProgressPageState extends State<StepProgressPage> {
                         );
                   } else {
                     _controller.nextPage(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.ease);
+                        duration: Duration(milliseconds: 600),
+                        curve: Curves.easeInSine);
                   }
                 },
                 style: ElevatedButton.styleFrom(
