@@ -6,13 +6,19 @@ import 'package:flutter_tts/flutter_tts.dart';
 import '../widgets/input_step_page.dart';
 
 class TranslationScreen extends StatefulWidget {
-  const TranslationScreen({super.key});
+  final VoidCallback onContinue;
+
+  const TranslationScreen({
+    super.key,
+    required this.onContinue,
+  });
 
   @override
   State<TranslationScreen> createState() => _TranslationScreenState();
 }
 
-class _TranslationScreenState extends State<TranslationScreen> with TickerProviderStateMixin {
+class _TranslationScreenState extends State<TranslationScreen>
+    with TickerProviderStateMixin {
   final List<String> selectedWords = [];
   final List<String> availableWords = [
     'Tôi',
@@ -75,8 +81,6 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
     }
   }
 
-
-
   void _showSuccessBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -133,9 +137,11 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                           children: [
                             Icon(Icons.send, color: Colors.white, size: 20),
                             SizedBox(width: 12),
-                            Icon(Icons.chat_bubble_outline, color: Colors.white, size: 20),
+                            Icon(Icons.chat_bubble_outline,
+                                color: Colors.white, size: 20),
                             SizedBox(width: 12),
-                            Icon(Icons.info_outline, color: Colors.white, size: 20),
+                            Icon(Icons.info_outline,
+                                color: Colors.white, size: 20),
                           ],
                         ),
                       ],
@@ -148,6 +154,7 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context);
+                          widget.onContinue();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
@@ -176,6 +183,7 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
       },
     );
   }
+
   void _showErrorBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -195,8 +203,10 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min, // Đảm bảo chiều cao tự động
-                  crossAxisAlignment: CrossAxisAlignment.start, // Căn nội dung về phía trái
+                  mainAxisSize: MainAxisSize.min,
+                  // Đảm bảo chiều cao tự động
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // Căn nội dung về phía trái
                   children: [
                     // Top row with check icon and text
                     Row(
@@ -233,9 +243,11 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                           children: [
                             Icon(Icons.send, color: Colors.white, size: 20),
                             SizedBox(width: 12),
-                            Icon(Icons.chat_bubble_outline, color: Colors.white, size: 20),
+                            Icon(Icons.chat_bubble_outline,
+                                color: Colors.white, size: 20),
                             SizedBox(width: 12),
-                            Icon(Icons.info_outline, color: Colors.white, size: 20),
+                            Icon(Icons.info_outline,
+                                color: Colors.white, size: 20),
                           ],
                         ),
                       ],
@@ -294,18 +306,16 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 24),
               const Text(
                 'Dịch nghĩa câu sau',
                 style: TextStyle(
@@ -352,16 +362,16 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                   runSpacing: 8,
                   children: selectedWords
                       .map((word) => GestureDetector(
-                    onTap: () => _animateAndMove(word, false),
-                    child: Chip(
-                      label: Text(word),
-                      backgroundColor: Colors.white,
-                      side: BorderSide(color: Colors.grey.shade300),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(21),
-                      ),
-                    ),
-                  ))
+                            onTap: () => _animateAndMove(word, false),
+                            child: Chip(
+                              label: Text(word),
+                              backgroundColor: Colors.white,
+                              side: BorderSide(color: Colors.grey.shade300),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(21),
+                              ),
+                            ),
+                          ))
                       .toList(),
                 ),
               ),
@@ -371,29 +381,28 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                 runSpacing: 8,
                 children: availableWords
                     .map((word) => AnimatedBuilder(
-                  animation: _controllers[word]!,
-                  builder: (context, child) {
-                    final value = Curves.easeOut
-                        .transform(_controllers[word]!.value);
-                    return Transform.translate(
-                      offset: Offset(0, -50 * value),
-                      child: GestureDetector(
-                        onTap: () => _animateAndMove(word, true),
-                        child: Chip(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(21),
-                          ),
-                          label: Text(word),
-                          backgroundColor: Colors.white,
-                          side: BorderSide(color: Colors.grey.shade300),
-                        ),
-                      ),
-                    );
-                  },
-                ))
+                          animation: _controllers[word]!,
+                          builder: (context, child) {
+                            final value = Curves.easeOut
+                                .transform(_controllers[word]!.value);
+                            return Transform.translate(
+                              offset: Offset(0, -50 * value),
+                              child: GestureDetector(
+                                onTap: () => _animateAndMove(word, true),
+                                child: Chip(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(21),
+                                  ),
+                                  label: Text(word),
+                                  backgroundColor: Colors.white,
+                                  side: BorderSide(color: Colors.grey.shade300),
+                                ),
+                              ),
+                            );
+                          },
+                        ))
                     .toList(),
               ),
-
               const SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
@@ -401,12 +410,12 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                   onPressed: () {
                     log(selectedWords.toString());
                     log(['Tôi', 'đi bộ', 'và', 'cô ấy', 'bơi'].toString());
-                    if (listEquals(selectedWords, ['Tôi', 'đi bộ', 'và', 'cô ấy', 'bơi'])) {
+                    if (listEquals(selectedWords,
+                        ['Tôi', 'đi bộ', 'và', 'cô ấy', 'bơi'])) {
                       _showSuccessBottomSheet(context);
                     } else {
                       _showErrorBottomSheet(context);
                     }
-
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF6949FF),

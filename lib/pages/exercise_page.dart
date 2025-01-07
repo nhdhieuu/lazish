@@ -18,7 +18,21 @@ class ExercisePage extends StatefulWidget {
 class _ExercisePageState extends State<ExercisePage> {
   final PageController _controller = PageController(initialPage: 0);
   double _currentPage = 0;
-
+  void nextPage() {
+    if (_currentPage == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CompletedPage(),
+        ),
+      );
+    } else {
+      _controller.nextPage(
+        duration: Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -84,46 +98,13 @@ class _ExercisePageState extends State<ExercisePage> {
               child: PageView(
                 controller: _controller,
                 children: [
-                  TranslationScreen(),
-                  SpeakingPage(),
+                  TranslationScreen(onContinue: nextPage),
+                  SpeakingPage(onContinue: nextPage),
                   WordMatching(),
 
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_currentPage == 2) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CompletedPage(),
-                      ),
-                    );
-                  } else {
-                    _controller.nextPage(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.ease);
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xff6949ff),
-                  minimumSize: const Size(double.infinity, 55),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    'TIẾP TỤC',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
           ],
         ),
       ),

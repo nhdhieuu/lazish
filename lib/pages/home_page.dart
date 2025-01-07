@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lazish/pages/exercise_page.dart';
 import 'package:lazish/widgets/topic_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -108,7 +109,14 @@ class HomePage extends StatelessWidget {
             imagePath: 'assets/city.png',
             progress: 9,
             total: 15,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExercisePage(),
+                ),
+              );
+            },
             color: const Color.fromARGB(255, 68, 236, 53),
           ),
           TopicCard(
