@@ -32,7 +32,7 @@ class SuccessfullPage extends StatelessWidget {
                     ],
                   ),
                   child: const Text(
-                    'Hurray!',
+                    'Tuyệt vời!',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lazish/pages/forgot_password_page.dart';
 import 'package:lazish/pages/main_layout_page.dart';
 import 'package:lazish/widgets/custom_text_field.dart';
 
@@ -127,7 +128,12 @@ class _SignInPageState extends State<SignInPage> {
                     // Khoảng cách giữa đường viền và nội dung bên dưới
                     child: TextButton(
                       onPressed: () {
-                        // Xử lý quên mật khẩu
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ForgotPasswordPage(),
+                          ),
+                        );
                       },
                       child: const Text(
                         "Quên mật khẩu?",
