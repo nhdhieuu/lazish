@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazish/pages/sign_in_page.dart';
+import 'package:lazish/pages/speaking_page.dart';
 import 'package:lazish/pages/successfull_page.dart';
 import 'package:lazish/pages/translation_page.dart';
 import 'package:lazish/widgets/input_step_page.dart';
@@ -82,12 +83,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 controller: _controller,
                 children: [
                   TranslationScreen(),
-                  InputStepPage(
-                    title: "Bạn bao nhiêu tuổi?",
-                    labelText: "Tuổi",
-                    hintText: "Nhập tuổi của bạn",
-                    isPassword: false,
-                  ),
+                  SpeakingPage(),
                   InputStepPage(
                     title: "Địa chỉ email của bạn là gì?",
                     labelText: "Email",

@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
+import '../widgets/input_step_page.dart';
+
 class TranslationScreen extends StatefulWidget {
   const TranslationScreen({super.key});
 
@@ -404,6 +406,7 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                     } else {
                       _showErrorBottomSheet(context);
                     }
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
