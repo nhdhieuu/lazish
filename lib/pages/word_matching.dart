@@ -33,14 +33,16 @@ class _WordMatchingState extends State<WordMatching> {
 
   void _shuffleWords() {
     final random = Random();
-    vietnameseWords = wordPairs.map((pair) => pair.keys.first).toList()..shuffle(random);
-    englishWords = wordPairs.map((pair) => pair.values.first).toList()..shuffle(random);
+    vietnameseWords = wordPairs.map((pair) => pair.keys.first).toList()
+      ..shuffle(random);
+    englishWords = wordPairs.map((pair) => pair.values.first).toList()
+      ..shuffle(random);
   }
 
   void checkMatch() {
     if (selectedVietnamese != null && selectedEnglish != null) {
       bool isCorrect = wordPairs.any((pair) =>
-      pair.keys.first == selectedVietnamese &&
+          pair.keys.first == selectedVietnamese &&
           pair.values.first == selectedEnglish);
 
       setState(() {
@@ -71,7 +73,7 @@ class _WordMatchingState extends State<WordMatching> {
       if ((isVietnamese && word == selectedVietnamese) ||
           (!isVietnamese && word == selectedEnglish)) {
         bool isCorrect = wordPairs.any((pair) =>
-        pair.keys.first == selectedVietnamese &&
+            pair.keys.first == selectedVietnamese &&
             pair.values.first == selectedEnglish);
         return isCorrect ? Color(0xFF6949FF) : Colors.red;
       }
@@ -88,18 +90,22 @@ class _WordMatchingState extends State<WordMatching> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          children: [
-            Text(
-              "Chạm để ghép nghĩa của từ",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 100),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 33),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Chạm để ghép nghĩa của từ",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 100),
 
-            // Word columns
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              // Word columns
+              Expanded(
                 child: Row(
                   children: [
                     // Vietnamese words
@@ -114,10 +120,10 @@ class _WordMatchingState extends State<WordMatching> {
                                 onPressed: matchedPairs.contains(word)
                                     ? null
                                     : () {
-                                  setState(() {
-                                    selectedVietnamese = word;
-                                  });
-                                },
+                                        setState(() {
+                                          selectedVietnamese = word;
+                                        });
+                                      },
                                 style: OutlinedButton.styleFrom(
                                   backgroundColor: getButtonColor(word, true),
                                   shape: RoundedRectangleBorder(
@@ -134,7 +140,9 @@ class _WordMatchingState extends State<WordMatching> {
                                   child: Text(
                                     word,
                                     style: TextStyle(
-                                      color: matchedPairs.contains(word) ? Colors.white : Colors.black,
+                                      color: matchedPairs.contains(word)
+                                          ? Colors.white
+                                          : Colors.black,
                                       fontSize: 16,
                                     ),
                                   ),
@@ -158,10 +166,10 @@ class _WordMatchingState extends State<WordMatching> {
                                 onPressed: matchedPairs.contains(word)
                                     ? null
                                     : () {
-                                  setState(() {
-                                    selectedEnglish = word;
-                                  });
-                                },
+                                        setState(() {
+                                          selectedEnglish = word;
+                                        });
+                                      },
                                 style: OutlinedButton.styleFrom(
                                   backgroundColor: getButtonColor(word, false),
                                   shape: RoundedRectangleBorder(
@@ -178,7 +186,9 @@ class _WordMatchingState extends State<WordMatching> {
                                   child: Text(
                                     word,
                                     style: TextStyle(
-                                      color: matchedPairs.contains(word) ? Colors.white : Colors.black,
+                                      color: matchedPairs.contains(word)
+                                          ? Colors.white
+                                          : Colors.black,
                                       fontSize: 16,
                                     ),
                                   ),
@@ -192,15 +202,13 @@ class _WordMatchingState extends State<WordMatching> {
                   ],
                 ),
               ),
-            ),
 
-            // Check answer button
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: (selectedVietnamese != null && selectedEnglish != null)
-                    ? checkMatch
-                    : null,
+              // Check answer button
+              ElevatedButton(
+                onPressed:
+                    (selectedVietnamese != null && selectedEnglish != null)
+                        ? checkMatch
+                        : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF6949FF),
                   shape: RoundedRectangleBorder(
@@ -216,8 +224,8 @@ class _WordMatchingState extends State<WordMatching> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
