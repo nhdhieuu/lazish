@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lazish/pages/completed_page.dart';
 import 'package:lazish/pages/sign_in_page.dart';
 import 'package:lazish/pages/speaking_page.dart';
 import 'package:lazish/pages/successfull_page.dart';
@@ -98,7 +99,7 @@ class _ExercisePageState extends State<ExercisePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SuccessfullPage(),
+                        builder: (context) => CompletedPage(),
                       ),
                     );
                   } else {
