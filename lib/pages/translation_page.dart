@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -24,13 +23,12 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
     'anh ấy'
   ];
 
-  // Map to track animation controllers for each word
   final Map<String, AnimationController> _controllers = {};
+  final FlutterTts flutterTts = FlutterTts();
 
   @override
   void initState() {
     super.initState();
-    // Initialize controllers for each word
     for (var word in availableWords) {
       _controllers[word] = AnimationController(
         duration: const Duration(milliseconds: 500),
@@ -41,14 +39,11 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
 
   @override
   void dispose() {
-    // Dispose all controllers
     for (var controller in _controllers.values) {
       controller.dispose();
     }
     super.dispose();
   }
-
-  final FlutterTts flutterTts = FlutterTts();
 
   Future<void> _speak(String text) async {
     try {
@@ -62,7 +57,6 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
 
   void _animateAndMove(String word, bool toSelected) {
     if (toSelected) {
-      // Start jump animation
       _controllers[word]?.forward().then((_) {
         setState(() {
           availableWords.remove(word);
@@ -78,6 +72,226 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
     }
   }
 
+
+
+  void _showSuccessBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Wrap(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Color(0xFF00D68F), // Green color
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min, // Đảm bảo chiều cao tự động
+                  children: [
+                    // Top row with check icon and text
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Left side - Check icon and text
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.9),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.check,
+                                color: Color(0xFF00D68F),
+                                size: 20,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Tuyệt vời!',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Right side - Icons
+                        Row(
+                          children: [
+                            Icon(Icons.send, color: Colors.white, size: 20),
+                            SizedBox(width: 12),
+                            Icon(Icons.chat_bubble_outline, color: Colors.white, size: 20),
+                            SizedBox(width: 12),
+                            Icon(Icons.info_outline, color: Colors.white, size: 20),
+                          ],
+                        ),
+                      ],
+                    ),
+                    // Spacer to push button to bottom
+                    SizedBox(height: 40),
+                    // Continue Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: Text(
+                          'TIẾP TỤC',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF00D68F),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  void _showErrorBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Wrap(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Color(0xFFF65555),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min, // Đảm bảo chiều cao tự động
+                  crossAxisAlignment: CrossAxisAlignment.start, // Căn nội dung về phía trái
+                  children: [
+                    // Top row with check icon and text
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Left side - Check icon and text
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.9),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.check,
+                                color: Color(0xFFF65555),
+                                size: 20,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Sai!',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Right side - Icons
+                        Row(
+                          children: [
+                            Icon(Icons.send, color: Colors.white, size: 20),
+                            SizedBox(width: 12),
+                            Icon(Icons.chat_bubble_outline, color: Colors.white, size: 20),
+                            SizedBox(width: 12),
+                            Icon(Icons.info_outline, color: Colors.white, size: 20),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      "Đáp án chính xác",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 21,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      "Tôi đi bộ và cô ấy bơi.",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 40),
+                    // Continue Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: Text(
+                          'TIẾP TỤC',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFFF65555),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +303,6 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 24),
-
               const Text(
                 'Dịch nghĩa câu sau',
                 style: TextStyle(
@@ -98,7 +311,6 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                 ),
               ),
               const SizedBox(height: 24),
-
               Container(
                 padding: const EdgeInsets.all(16),
                 child: Row(
@@ -126,7 +338,6 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                 ),
               ),
               const SizedBox(height: 24),
-
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -151,9 +362,7 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                       .toList(),
                 ),
               ),
-
               const Spacer(),
-
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
@@ -180,6 +389,50 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                   },
                 ))
                     .toList(),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => _showErrorBottomSheet(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text(
+                    'Error',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => _showSuccessBottomSheet(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text(
+                    'Đúng',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
