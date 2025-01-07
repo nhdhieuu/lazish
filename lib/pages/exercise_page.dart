@@ -3,6 +3,7 @@ import 'package:lazish/pages/sign_in_page.dart';
 import 'package:lazish/pages/speaking_page.dart';
 import 'package:lazish/pages/successfull_page.dart';
 import 'package:lazish/pages/translation_page.dart';
+import 'package:lazish/pages/word_matching.dart';
 import 'package:lazish/widgets/input_step_page.dart';
 import 'package:lazish/widgets/step_progress.dart';
 
@@ -71,7 +72,7 @@ class _ExercisePageState extends State<ExercisePage> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 80, vertical: 4),
-                        child: StepProgress(currentStep: _currentPage, steps: 4),
+                        child: StepProgress(currentStep: _currentPage, steps: 3),
                       ),
                     ),
                   ),
@@ -84,18 +85,8 @@ class _ExercisePageState extends State<ExercisePage> {
                 children: [
                   TranslationScreen(),
                   SpeakingPage(),
-                  InputStepPage(
-                    title: "Địa chỉ email của bạn là gì?",
-                    labelText: "Email",
-                    hintText: "Nhập email của bạn",
-                    isPassword: false,
-                  ),
-                  InputStepPage(
-                    title: "Tạo mật khẩu?",
-                    labelText: "Mật khẩu",
-                    hintText: "Nhập mật khẩu của bạn",
-                    isPassword: true,
-                  ),
+                  WordMatching(),
+
                 ],
               ),
             ),
@@ -103,7 +94,7 @@ class _ExercisePageState extends State<ExercisePage> {
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: ElevatedButton(
                 onPressed: () {
-                  if (_currentPage == 3) {
+                  if (_currentPage == 2) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(

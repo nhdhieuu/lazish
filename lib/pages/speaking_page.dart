@@ -148,7 +148,11 @@ class _SpeakingPageState extends State<SpeakingPage> {
                           borderRadius: BorderRadius.circular(
                               8), // Optional: rounded corners
                         ),
-                        child: Row(
+                        child:
+                        _speechToText.isListening ? Image.asset(
+                          "assets/recording.png",
+                        ) :
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
