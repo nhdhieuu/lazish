@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -390,11 +391,20 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                 ))
                     .toList(),
               ),
+
               const SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => _showErrorBottomSheet(context),
+                  onPressed: () {
+                    log(selectedWords.toString());
+                    log(['Tôi', 'đi bộ', 'và', 'cô ấy', 'bơi'].toString());
+                    if (listEquals(selectedWords, ['Tôi', 'đi bộ', 'và', 'cô ấy', 'bơi'])) {
+                      _showSuccessBottomSheet(context);
+                    } else {
+                      _showErrorBottomSheet(context);
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
                     padding: EdgeInsets.symmetric(vertical: 16),
@@ -403,29 +413,7 @@ class _TranslationScreenState extends State<TranslationScreen> with TickerProvid
                     ),
                   ),
                   child: Text(
-                    'Error',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () => _showSuccessBottomSheet(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: Text(
-                    'Đúng',
+                    'Kiểm tra đáp án',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
