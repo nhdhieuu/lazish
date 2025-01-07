@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:lazish/pages/otp_verification_page.dart';
+import 'package:lazish/pages/successfull_page.dart';
 import 'package:lazish/widgets/custom_text_field.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
-  const ForgotPasswordPage({super.key});
+class CreateNewPasswordPage extends StatefulWidget {
+  const CreateNewPasswordPage({super.key});
 
   @override
-  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+  State<CreateNewPasswordPage> createState() => _CreateNewPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  final TextEditingController emailController = TextEditingController();
-
+class _CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  bool rememberMe = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +47,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Quên mật khẩu 🔑",
+                      "Tạo mật khẩu mới 🔒",
                       style: const TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -57,7 +59,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: const Text(
-                    "Nhập địa chỉ email của bạn để nhận được mã OTP giúp tạo lại mật khẩu.",
+                    "Hãy lưu mật khẩu của bạn ở nơi an toàn, nếu bạn lỡ quên mất thì bạn sẽ phải thực hiện các bước để tạo lại mật khẩu.",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
@@ -70,13 +72,49 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   child: Column(
                     children: [
                       CustomTextField(
-                        labelText: "Email",
-                        hintText: "Nhập email của bạn",
-                        prefixIcon: Icons.email,
-                        keyboardType: TextInputType.emailAddress,
-                        controller: emailController,
+                        labelText: "Mật khẩu mới",
+                        hintText: 'Nhập mật khẩu của bạn',
+                        prefixIcon: Icons.lock,
+                        isPassword: true,
+                        controller: passwordController,
                       ),
                       const SizedBox(height: 18),
+                      CustomTextField(
+                        labelText: "Xác nhận mật khẩu",
+                        hintText: "Nhập lại mật khẩu",
+                        prefixIcon: Icons.lock,
+                        isPassword: true,
+                        controller: confirmPasswordController,
+                      ),
+                      const SizedBox(height: 18),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Checkbox(
+                            activeColor: const Color(0xff6949ff),
+                            value: rememberMe,
+                            onChanged: (value) {
+                              setState(() {
+                                rememberMe = value!;
+                              });
+                            },
+                          ),
+                          const Text(
+                            "Nhớ mật khẩu",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -90,7 +128,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 Navigator.push<void>(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const OTPVerificationPage(),
+                    builder: (BuildContext context) => const SuccessfullPage(),
                   ),
                 );
               },

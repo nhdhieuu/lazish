@@ -36,7 +36,7 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed, // Hiển thị tất cả các items
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: const Color(0xff6949ff),
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
         items: const [
@@ -45,16 +45,12 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
             label: 'Trang chủ',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Tìm kiếm',
+            icon: Icon(Icons.leaderboard),
+            label: 'Leaderboard',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Học tập',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Yêu thích',
+            icon: Icon(Icons.assignment),
+            label: 'Thử thách',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
