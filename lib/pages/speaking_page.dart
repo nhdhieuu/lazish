@@ -1,4 +1,8 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 class SpeakingPage extends StatefulWidget {
   const SpeakingPage({super.key});
@@ -8,8 +12,56 @@ class SpeakingPage extends StatefulWidget {
 }
 
 class _SpeakingPageState extends State<SpeakingPage> {
+  final FlutterTts flutterTts = FlutterTts();
+  final SpeechToText _speechToText = SpeechToText();
+  bool _speechEnabled = false;
+  String _wordSpoken = "";
+
+  @override
+  void initState() {
+    super.initState();
+    initSpeech();
+  }
+  Future<void> _speak(String text) async {
+    try {
+      await flutterTts.setLanguage("en-US");
+      await flutterTts.setPitch(1.0);
+      await flutterTts.speak(text);
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+  void initSpeech() async {
+    _speechEnabled = await _speechToText.initialize(
+      debugLogging: true,
+    );
+    log(_speechEnabled.toString());
+    setState(() {});
+  }
+
+  void _startListening() async {
+    await _speechToText.listen(
+      onResult: _onSpeechResult, // Truyền callback đúng
+      pauseFor: Duration(seconds: 10),  // Tạm dừng sau 5 giây không phát hiện giọng nói
+
+    );
+  }
+
+  void _stopListening() async {
+    await _speechToText.stop();
+    setState(() {});
+  }
+
+  void _onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      log(result.recognizedWords); // Log ra kết quả nhận dạng (debug
+      _wordSpoken = result.recognizedWords; // Đúng cú pháp
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -52,10 +104,13 @@ class _SpeakingPageState extends State<SpeakingPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(
-                              Icons.volume_up,
-                              color: Color(0xFFF583FC9),
-                              size: 30,
+                            GestureDetector(
+                              onTap: () =>  _speak("The call is from your mother"),
+                              child: const Icon(
+                                Icons.volume_up,
+                                color: Color(0xFFF583FC9),
+                                size: 30,
+                              ),
                             ),
                             const SizedBox(width: 8),
                             Flexible(
@@ -77,7 +132,10 @@ class _SpeakingPageState extends State<SpeakingPage> {
                 ),
               ),
               const SizedBox(height: 24),
-              Container(
+              InkWell(
+                onTap: _speechToText.isListening
+                    ? _stopListening
+                    : _startListening,
                 child: Row(
                   children: [
                     Expanded(
@@ -105,7 +163,7 @@ class _SpeakingPageState extends State<SpeakingPage> {
                               child: Text(
                                 'Tap to talks',
                                 style: const TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 23,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xFFF866CFE),
                                 ),
@@ -117,11 +175,20 @@ class _SpeakingPageState extends State<SpeakingPage> {
                         ),
                       ),
                     ),
-
-
                   ],
                 ),
-              )
+              ),
+              Container(
+                child: Text(_speechToText.isListening
+                    ? "listening..."
+                    : _speechEnabled
+                        ? "Tap the mic"
+                        : "Speech not available"),
+              ),
+              Text(
+                _wordSpoken,
+                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 25),
+              ),
             ],
           ),
         ),

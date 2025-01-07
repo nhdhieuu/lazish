@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   get: ^4.6.6
   flutter_tts: ^4.2.1
+  speech_to_text: ^7.0.0
 
 
 dev_dependencies:

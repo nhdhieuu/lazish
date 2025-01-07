@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lazish/pages/exercise_page.dart';
 import 'package:lazish/pages/home_page.dart';
 import 'package:lazish/pages/main_layout_page.dart';
@@ -6,7 +7,13 @@ import 'package:lazish/pages/translation_page.dart';
 import 'package:lazish/pages/welcome_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, // Chỉ cho phép dọc
+    // DeviceOrientation.landscapeLeft, // Hoặc thêm dòng này để cho phép ngang trái
+  ]).then((_) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
