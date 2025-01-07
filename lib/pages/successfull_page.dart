@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lazish/pages/step_progress_page.dart';
+import 'package:lazish/pages/main_layout_page.dart';
 
 class SuccessfullPage extends StatelessWidget {
   const SuccessfullPage({super.key});
@@ -104,7 +104,7 @@ class SuccessfullPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => StepProgressPage(),
+                            builder: (context) => MainLayoutPage(),
                           ),
                         );
                       },

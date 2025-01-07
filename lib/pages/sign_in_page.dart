@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lazish/pages/main_layout_page.dart';
 import 'package:lazish/widgets/custom_text_field.dart';
 
 class SignInPage extends StatefulWidget {
@@ -46,7 +47,7 @@ class _SignInPageState extends State<SignInPage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Hello there 👋",
+                      "Xin chào 👋",
                       style: const TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -115,16 +116,15 @@ class _SignInPageState extends State<SignInPage> {
                   decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(
-                        color: Color.fromRGBO(243, 242, 242, 1), // Màu của đường viền
+                        color: Color.fromRGBO(
+                            243, 242, 242, 1), // Màu của đường viền
                         width: 0.5, // Độ dày của đường viền
                       ),
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                        top:
-                            18.0),
-                         // Khoảng cách giữa đường viền và nội dung bên dưới
+                    padding: const EdgeInsets.only(top: 18.0),
+                    // Khoảng cách giữa đường viền và nội dung bên dưới
                     child: TextButton(
                       onPressed: () {
                         // Xử lý quên mật khẩu
@@ -148,6 +148,12 @@ class _SignInPageState extends State<SignInPage> {
             child: ElevatedButton(
               onPressed: () {
                 // Xử lý đăng nhập
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainLayoutPage(),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xff6949ff),
