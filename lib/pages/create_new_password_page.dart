@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lazish/pages/otp_verification_page.dart';
 import 'package:lazish/pages/successfull_page.dart';
 import 'package:lazish/widgets/custom_text_field.dart';
 
@@ -59,7 +58,7 @@ class _CreateNewPasswordPageState extends State<CreateNewPasswordPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: const Text(
-                    "Hãy lưu mật khẩu của bạn ở nơi an toàn, nếu bạn lỡ quên mất thì bạn sẽ phải thực hiện các bước để tạo lại mật khẩu.",
+                    "Hãy nhớ mật khẩu của bạn. Nếu quên bạn có thể tiếp tục vào phần quên mật khẩu.",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,

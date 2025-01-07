@@ -46,15 +46,15 @@ class _StepProgressState extends State<StepProgress> {
           width: double.infinity,
           margin: EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
-              color: Get.theme.primaryColor.withOpacity(0.4),
+              color: const Color.fromARGB(255, 215, 215, 215),
               borderRadius: BorderRadius.all(Radius.circular(8))),
           child: Stack(
             children: [
               AnimatedContainer(
-                duration: Duration(milliseconds: 300),
+                duration: Duration(milliseconds: 500),
                 width: widthProgress * widget.currentStep,
                 decoration: BoxDecoration(
-                    color: Get.theme.primaryColor,
+                    color: const Color(0xff6949ff).withOpacity(0.8),
                     borderRadius: BorderRadius.all(Radius.circular(8))),
               )
             ],
