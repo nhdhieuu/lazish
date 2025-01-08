@@ -91,6 +91,20 @@ class _ExercisePageState extends State<ExercisePage> {
                       ),
                     ),
                   ),
+                  Positioned(
+                    right: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10, top: 8),
+                      child: Text(
+                        "987",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

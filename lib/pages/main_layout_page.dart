@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lazish/pages/exercise_page.dart';
 import 'package:lazish/pages/home_page.dart';
 
+import 'leaderboard_page.dart';
 
 class MainLayoutPage extends StatefulWidget {
   const MainLayoutPage({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
   // Danh sách các màn hình tương ứng với mỗi tab
   final List<Widget> _screens = [
     const Center(child: HomePage()),
-    const Center(child:ExercisePage()),
+    const Center(child: LeaderboardScreen()),
     Center(child: Text("abc")),
     const Center(child: Text("abc")),
     const Center(child: Text("abc")),
@@ -35,7 +36,8 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
-        type: BottomNavigationBarType.fixed, // Hiển thị tất cả các items
+        type: BottomNavigationBarType.fixed,
+        // Hiển thị tất cả các items
         currentIndex: _selectedIndex,
         selectedItemColor: const Color(0xff6949ff),
         unselectedItemColor: Colors.grey,
