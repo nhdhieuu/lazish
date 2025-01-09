@@ -133,17 +133,7 @@ class _TranslationScreenState extends State<TranslationScreen>
                           ],
                         ),
                         // Right side - Icons
-                        Row(
-                          children: [
-                            Icon(Icons.send, color: Colors.white, size: 20),
-                            SizedBox(width: 12),
-                            Icon(Icons.chat_bubble_outline,
-                                color: Colors.white, size: 20),
-                            SizedBox(width: 12),
-                            Icon(Icons.info_outline,
-                                color: Colors.white, size: 20),
-                          ],
-                        ),
+
                       ],
                     ),
                     // Spacer to push button to bottom
@@ -239,22 +229,11 @@ class _TranslationScreenState extends State<TranslationScreen>
                           ],
                         ),
                         // Right side - Icons
-                        Row(
-                          children: [
-                            Icon(Icons.send, color: Colors.white, size: 20),
-                            SizedBox(width: 12),
-                            Icon(Icons.chat_bubble_outline,
-                                color: Colors.white, size: 20),
-                            SizedBox(width: 12),
-                            Icon(Icons.info_outline,
-                                color: Colors.white, size: 20),
-                          ],
-                        ),
                       ],
                     ),
                     SizedBox(height: 16),
                     Text(
-                      "Đáp án chính xác",
+                      "Sai rồi 😞",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 21,
@@ -333,7 +312,7 @@ class _TranslationScreenState extends State<TranslationScreen>
                       child: Container(
                         padding: const EdgeInsets.all(12),
                         decoration: const BoxDecoration(
-                          color: Colors.deepPurple,
+                          color: Color(0xFF6949FF),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(

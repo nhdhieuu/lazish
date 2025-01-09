@@ -1,9 +1,37 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lazish/pages/exercise_page.dart';
+import 'package:lazish/pages/streak_page.dart';
 import 'package:lazish/widgets/topic_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  void showChallengeTrackerBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: const SingleChildScrollView(
+          child: ChallengeContent(), // Sử dụng ChallengeContent như bạn định nghĩa
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +70,17 @@ class HomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ClipOval(
-                  child: Image.asset(
-                    'assets/fire.png', // Đường dẫn đến hình biểu tượng
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.cover,
+                InkWell(
+                  onTap: () {
+                      showChallengeTrackerBottomSheet(context);
+                  },
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/fire.png', // Đường dẫn đến hình biểu tượng
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 6),
@@ -100,7 +133,14 @@ class HomePage extends StatelessWidget {
             imagePath: 'assets/animal.png',
             progress: 15,
             total: 15,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExercisePage(),
+                ),
+              );
+            },
             color: const Color(0xffA1D7FF),
           ),
           TopicCard(
@@ -125,9 +165,15 @@ class HomePage extends StatelessWidget {
             imagePath: 'assets/abc.png',
             progress: 9,
             total: 15,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExercisePage(),
+                ),
+              );
+            },
             color: const Color(0xffFFDA35),
-    
           ),
           TopicCard(
             title: 'Thiên nhiên',
@@ -135,7 +181,14 @@ class HomePage extends StatelessWidget {
             imagePath: 'assets/nature.png',
             progress: 0,
             total: 15,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExercisePage(),
+                ),
+              );
+            },
             color: const Color(0xffFF8D8D),
           ),
         ],

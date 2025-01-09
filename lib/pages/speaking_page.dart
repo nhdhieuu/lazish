@@ -18,6 +18,7 @@ class _SpeakingPageState extends State<SpeakingPage> {
   final SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _wordSpoken = "";
+  bool _isTapped = false; // Add this variable
 
   @override
   void initState() {
@@ -114,18 +115,7 @@ class _SpeakingPageState extends State<SpeakingPage> {
                             ),
                           ],
                         ),
-                        // Right side - Icons
-                        Row(
-                          children: [
-                            Icon(Icons.send, color: Colors.white, size: 20),
-                            SizedBox(width: 12),
-                            Icon(Icons.chat_bubble_outline,
-                                color: Colors.white, size: 20),
-                            SizedBox(width: 12),
-                            Icon(Icons.info_outline,
-                                color: Colors.white, size: 20),
-                          ],
-                        ),
+
                       ],
                     ),
                     // Spacer to push button to bottom
@@ -220,18 +210,7 @@ class _SpeakingPageState extends State<SpeakingPage> {
                             ),
                           ],
                         ),
-                        // Right side - Icons
-                        Row(
-                          children: [
-                            Icon(Icons.send, color: Colors.white, size: 20),
-                            SizedBox(width: 12),
-                            Icon(Icons.chat_bubble_outline,
-                                color: Colors.white, size: 20),
-                            SizedBox(width: 12),
-                            Icon(Icons.info_outline,
-                                color: Colors.white, size: 20),
-                          ],
-                        ),
+
                       ],
                     ),
                     SizedBox(height: 16),
@@ -361,9 +340,16 @@ class _SpeakingPageState extends State<SpeakingPage> {
               ),
               const SizedBox(height: 24),
               InkWell(
-                onTap: _speechToText.isListening
-                    ? _stopListening
-                    : _startListening,
+                onTap: () {
+                  setState(() {
+                    _isTapped = !_isTapped;
+                  });
+                  if (_isTapped) {
+                    _startListening();
+                  } else {
+                    _stopListening();
+                  }
+                },
                 child: Row(
                   children: [
                     Expanded(
@@ -376,7 +362,7 @@ class _SpeakingPageState extends State<SpeakingPage> {
                           borderRadius: BorderRadius.circular(
                               8), // Optional: rounded corners
                         ),
-                        child: _speechToText.isListening
+                        child: _isTapped
                             ? Image.asset(
                                 "assets/recording.png",
                               )
