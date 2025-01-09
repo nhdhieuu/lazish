@@ -5,31 +5,33 @@ import 'package:flutter_tts/flutter_tts.dart';
 
 import '../widgets/input_step_page.dart';
 
-class TranslationScreen extends StatefulWidget {
+class ListeningPage extends StatefulWidget {
   final VoidCallback onContinue;
 
-  const TranslationScreen({
+  const ListeningPage({
     super.key,
     required this.onContinue,
   });
 
   @override
-  State<TranslationScreen> createState() => _TranslationScreenState();
+  State<ListeningPage> createState() => _ListeningPageState();
 }
 
-class _TranslationScreenState extends State<TranslationScreen>
+class _ListeningPageState extends State<ListeningPage>
     with TickerProviderStateMixin {
   final List<String> selectedWords = [];
   final List<String> availableWords = [
-    'Tôi',
-    'bơi',
-    'ăn cơm',
-    'chạy nhanh',
-    'cô ấy',
-    'và',
-    'Bạn',
-    'đi bộ',
-    'anh ấy'
+    'is',
+    'eating',
+    'Bro',
+    'mom',
+    'sleep',
+    'Dad',
+    'and',
+    'I',
+    'drinking',
+    'We',
+    'is',
   ];
 
   final Map<String, AnimationController> _controllers = {};
@@ -133,7 +135,6 @@ class _TranslationScreenState extends State<TranslationScreen>
                           ],
                         ),
                         // Right side - Icons
-
                       ],
                     ),
                     // Spacer to push button to bottom
@@ -242,7 +243,7 @@ class _TranslationScreenState extends State<TranslationScreen>
                     ),
                     SizedBox(height: 8),
                     Text(
-                      "Tôi đi bộ và cô ấy bơi.",
+                      "Dad is eating and mom is drinking",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,
@@ -296,37 +297,39 @@ class _TranslationScreenState extends State<TranslationScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Dịch nghĩa câu sau',
+                'Đoạn âm thanh vừa nói gì?',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 24),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () => _speak("I walk and she swims."),
-                      child: Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF6949FF),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.volume_up,
-                          color: Colors.white,
+              InkWell(
+                onTap: () {
+                  _speak("Dad is eating and mom is drinking");
+                },
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset("assets/listening.png"),
+                      const SizedBox(height: 16),
+                      Text(
+                        "Tap to play audio",
+                        style: TextStyle(
+                          color: Color(0xFF9D9D9D),
+                          fontSize: 16,
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    const Text(
-                      'I walk and she swims.',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 24),
@@ -389,9 +392,8 @@ class _TranslationScreenState extends State<TranslationScreen>
                 child: ElevatedButton(
                   onPressed: () {
                     log(selectedWords.toString());
-                    log(['Tôi', 'đi bộ', 'và', 'cô ấy', 'bơi'].toString());
                     if (listEquals(selectedWords,
-                        ['Tôi', 'đi bộ', 'và', 'cô ấy', 'bơi'])) {
+                        ['Dad', 'is', 'eating', 'and', 'mom', 'is', 'drinking'])) {
                       _showSuccessBottomSheet(context);
                     } else {
                       _showErrorBottomSheet(context);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazish/pages/completed_page.dart';
+import 'package:lazish/pages/listening_page.dart';
 import 'package:lazish/pages/sign_in_page.dart';
 import 'package:lazish/pages/speaking_page.dart';
 import 'package:lazish/pages/streak_page.dart';
@@ -20,7 +21,7 @@ class _ExercisePageState extends State<ExercisePage> {
   final PageController _controller = PageController(initialPage: 0);
   double _currentPage = 0;
   void nextPage() {
-    if (_currentPage == 2) {
+    if (_currentPage == 3) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -88,7 +89,7 @@ class _ExercisePageState extends State<ExercisePage> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 80, vertical: 4),
-                        child: StepProgress(currentStep: _currentPage, steps: 3),
+                        child: StepProgress(currentStep: _currentPage, steps: 4),
                       ),
                     ),
                   ),
@@ -115,6 +116,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 children: [
                   TranslationScreen(onContinue: nextPage),
                   SpeakingPage(onContinue: nextPage),
+                  ListeningPage(onContinue: nextPage),
                   WordMatching(onContinue: nextPage),
 
                 ],

@@ -56,7 +56,7 @@ class _WordMatchingState extends State<WordMatching> {
         }
       });
 
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(Duration(milliseconds: 500), () {
         setState(() {
           if (!isCorrect) {
             selectedVietnamese = null;
