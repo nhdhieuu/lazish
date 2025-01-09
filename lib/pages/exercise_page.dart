@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lazish/pages/completed_page.dart';
 import 'package:lazish/pages/sign_in_page.dart';
 import 'package:lazish/pages/speaking_page.dart';
+import 'package:lazish/pages/streak_page.dart';
 import 'package:lazish/pages/successfull_page.dart';
 import 'package:lazish/pages/translation_page.dart';
 import 'package:lazish/pages/word_matching.dart';
