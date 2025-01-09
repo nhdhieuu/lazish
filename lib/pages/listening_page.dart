@@ -17,8 +17,7 @@ class ListeningPage extends StatefulWidget {
   State<ListeningPage> createState() => _ListeningPageState();
 }
 
-class _ListeningPageState extends State<ListeningPage>
-    with TickerProviderStateMixin {
+class _ListeningPageState extends State<ListeningPage> {
   final List<String> selectedWords = [];
   final List<String> availableWords = [
     'is',
@@ -34,25 +33,11 @@ class _ListeningPageState extends State<ListeningPage>
     'is',
   ];
 
-  final Map<String, AnimationController> _controllers = {};
   final FlutterTts flutterTts = FlutterTts();
 
   @override
-  void initState() {
-    super.initState();
-    for (var word in availableWords) {
-      _controllers[word] = AnimationController(
-        duration: const Duration(milliseconds: 500),
-        vsync: this,
-      );
-    }
-  }
-
-  @override
   void dispose() {
-    for (var controller in _controllers.values) {
-      controller.dispose();
-    }
+    flutterTts.stop();
     super.dispose();
   }
 
@@ -66,21 +51,16 @@ class _ListeningPageState extends State<ListeningPage>
     }
   }
 
-  void _animateAndMove(String word, bool toSelected) {
-    if (toSelected) {
-      _controllers[word]?.forward().then((_) {
-        setState(() {
-          availableWords.remove(word);
-          selectedWords.add(word);
-        });
-        _controllers[word]?.reset();
-      });
-    } else {
-      setState(() {
+  void _moveWord(String word, bool toSelected) {
+    setState(() {
+      if (toSelected) {
+        availableWords.remove(word);
+        selectedWords.add(word);
+      } else {
         selectedWords.remove(word);
         availableWords.add(word);
-      });
-    }
+      }
+    });
   }
 
   void _showSuccessBottomSheet(BuildContext context) {
@@ -102,13 +82,11 @@ class _ListeningPageState extends State<ListeningPage>
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min, // Đảm bảo chiều cao tự động
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Top row with check icon and text
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Left side - Check icon and text
                         Row(
                           children: [
                             Container(
@@ -134,12 +112,9 @@ class _ListeningPageState extends State<ListeningPage>
                             ),
                           ],
                         ),
-                        // Right side - Icons
                       ],
                     ),
-                    // Spacer to push button to bottom
                     SizedBox(height: 40),
-                    // Continue Button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -195,15 +170,11 @@ class _ListeningPageState extends State<ListeningPage>
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  // Đảm bảo chiều cao tự động
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  // Căn nội dung về phía trái
                   children: [
-                    // Top row with check icon and text
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Left side - Check icon and text
                         Row(
                           children: [
                             Container(
@@ -229,7 +200,6 @@ class _ListeningPageState extends State<ListeningPage>
                             ),
                           ],
                         ),
-                        // Right side - Icons
                       ],
                     ),
                     SizedBox(height: 16),
@@ -251,7 +221,6 @@ class _ListeningPageState extends State<ListeningPage>
                       ),
                     ),
                     SizedBox(height: 40),
-                    // Continue Button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -345,16 +314,16 @@ class _ListeningPageState extends State<ListeningPage>
                   runSpacing: 8,
                   children: selectedWords
                       .map((word) => GestureDetector(
-                            onTap: () => _animateAndMove(word, false),
-                            child: Chip(
-                              label: Text(word),
-                              backgroundColor: Colors.white,
-                              side: BorderSide(color: Colors.grey.shade300),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(21),
-                              ),
-                            ),
-                          ))
+                    onTap: () => _moveWord(word, false),
+                    child: Chip(
+                      label: Text(word),
+                      backgroundColor: Colors.white,
+                      side: BorderSide(color: Colors.grey.shade300),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(21),
+                      ),
+                    ),
+                  ))
                       .toList(),
                 ),
               ),
@@ -363,27 +332,17 @@ class _ListeningPageState extends State<ListeningPage>
                 spacing: 8,
                 runSpacing: 8,
                 children: availableWords
-                    .map((word) => AnimatedBuilder(
-                          animation: _controllers[word]!,
-                          builder: (context, child) {
-                            final value = Curves.easeOut
-                                .transform(_controllers[word]!.value);
-                            return Transform.translate(
-                              offset: Offset(0, -50 * value),
-                              child: GestureDetector(
-                                onTap: () => _animateAndMove(word, true),
-                                child: Chip(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(21),
-                                  ),
-                                  label: Text(word),
-                                  backgroundColor: Colors.white,
-                                  side: BorderSide(color: Colors.grey.shade300),
-                                ),
-                              ),
-                            );
-                          },
-                        ))
+                    .map((word) => GestureDetector(
+                  onTap: () => _moveWord(word, true),
+                  child: Chip(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(21),
+                    ),
+                    label: Text(word),
+                    backgroundColor: Colors.white,
+                    side: BorderSide(color: Colors.grey.shade300),
+                  ),
+                ))
                     .toList(),
               ),
               const SizedBox(height: 16),

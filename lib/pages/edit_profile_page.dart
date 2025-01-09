@@ -60,10 +60,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: Image.asset(
-                    "assets/lazish.png",
-                    width: 123,
-                    height: 123,
+                  child:  CircleAvatar(
+                    radius: 60,
+                    backgroundColor: Colors.transparent,
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/avatar.png',
+                        width: 120,
+                        height: 120,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24),

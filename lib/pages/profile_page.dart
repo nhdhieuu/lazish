@@ -36,10 +36,17 @@ class ProfilePage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Image.asset(
-              "assets/lazish.png",
-              width: 123,
-              height: 123,
+            CircleAvatar(
+              radius: 60,
+              backgroundColor: Colors.transparent,
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/avatar.png',
+                  width: 120,
+                  height: 120,
+                  fit: BoxFit.fill,
+                ),
+              ),
             ),
             const SizedBox(height: 21),
             const Text(
