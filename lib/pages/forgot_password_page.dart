@@ -57,7 +57,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: const Text(
-                    "Nhập địa chỉ email của bạn để nhận được mã OTP giúp tạo lại mật khẩu.",
+                    "Nhập email của bạn để nhận mã OTP và đặt lại mật khẩu.",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,

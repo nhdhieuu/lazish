@@ -6,6 +6,7 @@ class InputStepPage extends StatelessWidget {
   final String labelText; // Nhãn
   final String hintText; // Gợi ý
   final bool isPassword; // Trạng thái mật khẩu
+  final TextEditingController controller;
 
   const InputStepPage({
     super.key,
@@ -13,6 +14,7 @@ class InputStepPage extends StatelessWidget {
     required this.labelText,
     required this.hintText,
     this.isPassword = false,
+    required this.controller,
   });
 
   @override
@@ -50,6 +52,7 @@ class InputStepPage extends StatelessWidget {
                       keyboardType: isPassword
                           ? TextInputType.visiblePassword
                           : TextInputType.text,
+                      controller: controller,
                     ),
                     const SizedBox(height: 20),
                   ],
