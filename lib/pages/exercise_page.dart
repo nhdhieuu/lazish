@@ -92,7 +92,7 @@ class _ExercisePageState extends State<ExercisePage> {
                       ),
                     ),
                   ),
-                  Positioned(
+                  /*Positioned(
                     right: 0,
                     child: Padding(
                       padding: const EdgeInsets.only(right: 10, top: 8),
@@ -105,7 +105,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         ),
                       ),
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ),

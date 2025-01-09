@@ -14,9 +14,6 @@ class ChallengeContent extends StatelessWidget {
           // Header with Progress
           _buildHeader(),
           const SizedBox(height: 20),
-          // Info Cards
-          _buildInfoCards(),
-          const SizedBox(height: 30),
           CalendarDatePicker(
             initialDate: DateTime.now(),
             firstDate: DateTime(2025, 1),
@@ -34,44 +31,38 @@ class ChallengeContent extends StatelessWidget {
   Widget _buildHeader() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const [
+      children:  [
         Text(
-          'Streak (day)',
+          'Chuỗi (ngày)',
           style: TextStyle(
             color: Color(0xFF585859),
             fontSize: 24,
             fontWeight: FontWeight.w600,
           ),
         ),
-        Text(
-          '4/14',
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 16,
-          ),
-        ),
+        Row(
+          children:[
+            Image.asset(
+              'assets/fire.png',
+              width: 24,
+              height: 24,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              '4 ngày',
+              style: TextStyle(
+                color: Color(0xFF868687),
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ]
+        )
       ],
     );
   }
 
-  Widget _buildProgressBar() {
-    return Container(
-      height: 8,
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: FractionallySizedBox(
-        widthFactor: 4 / 14, // progress ratio
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.purple,
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
-    );
-  }
+
 
   Widget _buildInfoCards() {
     return Row(
