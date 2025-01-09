@@ -46,7 +46,7 @@ class _StepProgressState extends State<StepProgress> {
           width: double.infinity,
           margin: EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
-              color: Get.theme.primaryColor.withOpacity(0.4),
+              color:Colors.grey.shade300,
               borderRadius: BorderRadius.all(Radius.circular(8))),
           child: Stack(
             children: [
@@ -54,7 +54,7 @@ class _StepProgressState extends State<StepProgress> {
                 duration: Duration(milliseconds: 300),
                 width: widthProgress * widget.currentStep,
                 decoration: BoxDecoration(
-                    color: Get.theme.primaryColor,
+                    color: Color(0xFF6949FF),
                     borderRadius: BorderRadius.all(Radius.circular(8))),
               )
             ],
