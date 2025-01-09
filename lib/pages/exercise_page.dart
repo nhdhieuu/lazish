@@ -20,6 +20,7 @@ class ExercisePage extends StatefulWidget {
 class _ExercisePageState extends State<ExercisePage> {
   final PageController _controller = PageController(initialPage: 0);
   double _currentPage = 0;
+
   void nextPage() {
     if (_currentPage == 3) {
       Navigator.push(
@@ -35,6 +36,7 @@ class _ExercisePageState extends State<ExercisePage> {
       );
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -89,29 +91,18 @@ class _ExercisePageState extends State<ExercisePage> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 80, vertical: 4),
-                        child: StepProgress(currentStep: _currentPage, steps: 4),
+                        child:
+                            StepProgress(currentStep: _currentPage, steps: 4),
                       ),
                     ),
                   ),
-                  /*Positioned(
-                    right: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10, top: 8),
-                      child: Text(
-                        "987",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),*/
                 ],
               ),
             ),
             Expanded(
               child: PageView(
+                physics: NeverScrollableScrollPhysics(),
+                // Add this line to disable swiping
                 controller: _controller,
                 children: [
                   TranslationScreen(onContinue: nextPage),
