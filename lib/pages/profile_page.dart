@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lazish/pages/edit_profile_page.dart';
 
 import '../widgets/chart.dart';
 
@@ -13,10 +15,20 @@ class ProfilePage extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Image.asset(
-              "assets/update_profile.png",
-              width: 30,
-              height: 30,
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfilePage(),
+                  ),
+                );
+              },
+              child: Image.asset(
+                "assets/update_profile.png",
+                width: 30,
+                height: 30,
+              ),
             ),
           ],
         ),

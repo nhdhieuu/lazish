@@ -60,6 +60,7 @@ class XPChart extends StatelessWidget {
               isCurved: true,
               color: Color(0xFF6949FF),
               barWidth: 3,
+              curveSmoothness: 0.4,
               isStrokeCapRound: true,
               dotData: FlDotData(show: false),
               belowBarData: BarAreaData(
