@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:lazish/pages/edit_profile_page.dart';
 import 'package:lazish/pages/exercise_page.dart';
+import 'package:lazish/pages/profile_page.dart';
 import 'package:lazish/pages/streak_page.dart';
 import 'package:lazish/widgets/topic_card.dart';
 
@@ -13,7 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   void showChallengeTrackerBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -27,7 +28,8 @@ class _HomePageState extends State<HomePage> {
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
         child: const SingleChildScrollView(
-          child: ChallengeContent(), // Sử dụng ChallengeContent như bạn định nghĩa
+          child:
+              ChallengeContent(), // Sử dụng ChallengeContent như bạn định nghĩa
         ),
       ),
     );
@@ -43,36 +45,35 @@ class _HomePageState extends State<HomePage> {
         titleTextStyle: TextStyle(fontSize: 16),
         automaticallyImplyLeading: false,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ClipOval(
-                  child: Image.asset(
-                    'assets/usa_flag.png', // Đường dẫn đến hình quốc kỳ
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.cover,
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfilePage(),
                   ),
+                );
+              },
+              child: ClipOval(
+
+                child: Image.asset(
+                  'assets/avatar.png', // Đường dẫn đến hình quốc kỳ
+                  width: 30,
+                  height: 30,
+                  fit: BoxFit.cover,
                 ),
-                const SizedBox(width: 6),
-                const Text(
-                  'EN',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+              ),
             ),
+
+            const Spacer(),
             // Ngọn lửa và số
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InkWell(
                   onTap: () {
-                      showChallengeTrackerBottomSheet(context);
+                    showChallengeTrackerBottomSheet(context);
                   },
                   child: ClipOval(
                     child: Image.asset(
@@ -87,12 +88,14 @@ class _HomePageState extends State<HomePage> {
                 const Text(
                   '4',
                   style: TextStyle(
-                    color: Colors.white,
+                    fontSize: 18,
+                    color: Color(0xFFD0C6FE),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
+            const SizedBox(width: 40),
             // Hình lục giác và số
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -109,17 +112,12 @@ class _HomePageState extends State<HomePage> {
                 const Text(
                   '957',
                   style: TextStyle(
-                    color: Colors.white,
+                    fontSize: 18,
+                    color: Color(0xFFD0C6FE),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
-            ),
-            // Ngôi sao
-            const Icon(
-              Icons.star,
-              color: Colors.yellow,
-              size: 24,
             ),
           ],
         ),
