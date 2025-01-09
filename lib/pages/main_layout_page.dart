@@ -18,9 +18,7 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
   final List<Widget> _screens = [
     const Center(child: HomePage()),
     const Center(child: LeaderboardScreen()),
-    Center(child: Text("abc")),
-    const Center(child: Text("abc")),
-    const Center(child: Text("abc")),
+    Center(child: Text("abcx")),
   ];
 
   void _onItemTapped(int index) {
@@ -49,12 +47,9 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.leaderboard),
-            label: 'Leaderboard',
+            label: 'Bảng xếp hạng',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            label: 'Thử thách',
-          ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Tài khoản',
