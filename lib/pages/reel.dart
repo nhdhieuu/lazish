@@ -29,7 +29,7 @@ class _ReelPageState extends State<ReelPage> {
         toolbarHeight: 40,
         
         backgroundColor: Colors.transparent, // Để AppBar trong suốt
-        automaticallyImplyLeading: true, // Bật nút back tự động
+        automaticallyImplyLeading: false, // Bật nút back tự động
         iconTheme: IconThemeData(color: Colors.white),
         title: Text(
           'English Reels',

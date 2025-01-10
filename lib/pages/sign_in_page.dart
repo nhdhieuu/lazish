@@ -11,9 +11,22 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool rememberMe = false;
+
+  void _handleSignIn() {
+    if (_formKey.currentState!.validate()) {
+      // Nếu form hợp lệ, chuyển đến trang chính
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MainLayoutPage(),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,144 +36,157 @@ class _SignInPageState extends State<SignInPage> {
       body: SafeArea(
         child: Column(children: [
           Expanded(
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      icon: Image.asset(
-                        'assets/arrowleft.png',
-                        height: 40,
-                        width: 40,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 42),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Xin chào 👋",
-                      style: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Column(
-                    children: [
-                      CustomTextField(
-                        labelText: "Email",
-                        hintText: "Nhập email của bạn",
-                        prefixIcon: Icons.email,
-                        keyboardType: TextInputType.emailAddress,
-                        controller: emailController,
-                      ),
-                      const SizedBox(height: 18),
-                      CustomTextField(
-                        labelText: "Mật khẩu",
-                        hintText: 'Nhập mật khẩu của bạn',
-                        prefixIcon: Icons.lock,
-                        isPassword: true,
-                        controller: passwordController,
-                      ),
-                      const SizedBox(height: 18),
-                    ],
-                  ),
-                ),
-                // Dòng checkbox
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Checkbox(
-                            activeColor: const Color(0xff6949ff),
-                            value: rememberMe,
-                            onChanged: (value) {
-                              setState(() {
-                                rememberMe = value!;
-                              });
-                            },
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: IconButton(
+                          icon: Image.asset(
+                            'assets/arrowleft.png',
+                            height: 40,
+                            width: 40,
                           ),
-                          const Text(
-                            "Nhớ mật khẩu",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 18),
-                Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 25),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: Color.fromRGBO(
-                            243, 242, 242, 1), // Màu của đường viền
-                        width: 0.5, // Độ dày của đường viền
-                      ),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 18.0),
-                    // Khoảng cách giữa đường viền và nội dung bên dưới
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ForgotPasswordPage(),
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        "Quên mật khẩu?",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Color(0xff6949ff),
-                          fontWeight: FontWeight.w600,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
                     ),
-                  ),
+                    const SizedBox(height: 42),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Xin chào 👋",
+                          style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Column(
+                        children: [
+                          CustomTextField(
+                            labelText: "Email",
+                            hintText: "Nhập email của bạn",
+                            prefixIcon: Icons.email,
+                            keyboardType: TextInputType.emailAddress,
+                            controller: emailController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Email không được để trống';
+                              }
+                              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                                  .hasMatch(value)) {
+                                return 'Email không hợp lệ';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 18),
+                          CustomTextField(
+                            labelText: "Mật khẩu",
+                            hintText: 'Nhập mật khẩu của bạn',
+                            prefixIcon: Icons.lock,
+                            isPassword: true,
+                            controller: passwordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Mật khẩu không được để trống';
+                              }
+                              if (value.length < 6) {
+                                return 'Mật khẩu phải dài ít nhất 6 ký tự';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 18),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Checkbox(
+                                activeColor: const Color(0xff6949ff),
+                                value: rememberMe,
+                                onChanged: (value) {
+                                  setState(() {
+                                    rememberMe = value!;
+                                  });
+                                },
+                              ),
+                              const Text(
+                                "Nhớ mật khẩu",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                    Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(horizontal: 25),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(
+                            color: Color.fromRGBO(
+                                243, 242, 242, 1), // Màu của đường viền
+                            width: 0.5, // Độ dày của đường viền
+                          ),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ForgotPasswordPage(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Quên mật khẩu?",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Color(0xff6949ff),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
             child: ElevatedButton(
-              onPressed: () {
-                // Xử lý đăng nhập
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MainLayoutPage(),
-                  ),
-                );
-              },
+              onPressed: _handleSignIn,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xff6949ff),
                 minimumSize: const Size(double.infinity, 55),
