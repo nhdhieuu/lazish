@@ -137,8 +137,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         ElegantNotification.success(
-                          title:  Text("Cập nhật thành công"),
-                          description:  Text(" Thông tin của bạn đã được cập nhật thành công! "),
+                          title:  Text("Cập nhật thành công",
+                            style: TextStyle(
+                              color: Color(0xFF494949),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          description:  Text("Thông tin của bạn đã được cập nhật thành công! "),
                           onDismiss: () {
                             print('Message when the notification is dismissed');
                           },

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:lazish/pages/main_layout_page.dart';
 import 'package:lazish/pages/reel.dart';
+import 'package:lazish/pages/welcome_page.dart';
 
 
 void main() {
@@ -23,11 +24,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MainLayoutPage(),
+      home: WelcomePage(),
     );
   }
 }

@@ -23,7 +23,14 @@ class _SignInPageState extends State<SignInPage> {
     if (_formKey.currentState!.validate()) {
       // Nếu form hợp lệ, chuyển đến trang chính
       ElegantNotification.success(
-        title: Text("Đăng nhập thành công"),
+        title: Text(
+          "Đăng nhập thành công",
+          style: const TextStyle(
+            color: Color(0xFF494949),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         description: Text("Chào mừng bạn đến với Lazish!"),
         onDismiss: () {
           print('Message when the notification is dismissed');
