@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lazish/pages/create_new_password_page.dart';
 
@@ -15,6 +14,7 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
   late List<FocusNode> _focusNodes;
   int _resendTimeout = 55;
   late final Timer _timer;
+  bool _isError = false;
 
   @override
   void initState() {
@@ -48,10 +48,28 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
     super.dispose();
   }
 
-  void _onOTPEntered() {
+  void _validateOTP() {
     String otpCode = _controllers.map((controller) => controller.text).join();
-    print("Entered OTP: $otpCode");
-    // Add logic for OTP verification
+    if (otpCode.length < 4 || !_isValidOTP(otpCode)) {
+      setState(() {
+        _isError = true;
+      });
+    } else {
+      setState(() {
+        _isError = false;
+      });
+      Navigator.push<void>(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => const CreateNewPasswordPage(),
+        ),
+      );
+    }
+  }
+
+  bool _isValidOTP(String otp) {
+    // Chỉ chấp nhận ký tự số
+    return RegExp(r'^\d{4}$').hasMatch(otp);
   }
 
   Widget _buildOTPField(int index) {
@@ -68,11 +86,17 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
           counterText: "",
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Colors.grey, width: 1),
+            borderSide: BorderSide(
+              color: _isError ? Colors.red : Colors.grey,
+              width: 1,
+            ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Color(0xff6949ff), width: 2),
+            borderSide: BorderSide(
+              color: _isError ? Colors.red : const Color(0xff6949ff),
+              width: 2,
+            ),
           ),
         ),
         onChanged: (value) {
@@ -80,9 +104,6 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
             _focusNodes[index + 1].requestFocus();
           } else if (value.isEmpty && index > 0) {
             _focusNodes[index - 1].requestFocus();
-          }
-          if (index == _focusNodes.length - 1) {
-            _onOTPEntered();
           }
         },
       ),
@@ -146,6 +167,14 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: List.generate(4, (index) => _buildOTPField(index)),
                 ),
+                if (_isError)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: const Text(
+                      "Mã OTP không hợp lệ. Vui lòng thử lại.",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
                 const SizedBox(height: 20),
                 Center(
                   child: TextButton(
@@ -155,7 +184,6 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
                           _resendTimeout = 55;
                           _startResendTimer();
                         });
-                        // Add logic to resend OTP
                         print("Đang gửi OTP...");
                       }
                     },
@@ -176,14 +204,7 @@ class _OTPVerificationPageState extends State<OTPVerificationPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push<void>(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const CreateNewPasswordPage(),
-                  ),
-                );
-              },
+              onPressed: _validateOTP,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xff6949ff),
                 minimumSize: const Size(double.infinity, 55),
