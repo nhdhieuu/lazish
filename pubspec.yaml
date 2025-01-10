@@ -37,6 +37,8 @@ dependencies:
   get: ^4.6.6
   flutter_tts: ^4.2.1
   speech_to_text: ^7.0.0
+  fl_chart: ^0.70.1
+
 
 
 dev_dependencies:

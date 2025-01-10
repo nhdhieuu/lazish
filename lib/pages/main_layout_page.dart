@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazish/pages/home_page.dart';
+import 'package:lazish/pages/profile_page.dart';
 
 import 'leaderboard_page.dart';
 
@@ -17,9 +18,7 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
   final List<Widget> _screens = [
     const Center(child: HomePage()),
     const Center(child: LeaderboardScreen()),
-    Center(child: Text("abc")),
-    const Center(child: Text("abc")),
-    const Center(child: Text("abc")),
+    Center(child: ProfilePage()),
   ];
 
   void _onItemTapped(int index) {
@@ -48,12 +47,9 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.leaderboard),
-            label: 'Leaderboard',
+            label: 'Bảng xếp hạng',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            label: 'Thử thách',
-          ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Tài khoản',

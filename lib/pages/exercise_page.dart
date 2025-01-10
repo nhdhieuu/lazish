@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lazish/pages/completed_page.dart';
+import 'package:lazish/pages/listening_page.dart';
 import 'package:lazish/pages/sign_in_page.dart';
 import 'package:lazish/pages/speaking_page.dart';
+import 'package:lazish/pages/streak_page.dart';
 import 'package:lazish/pages/successfull_page.dart';
 import 'package:lazish/pages/translation_page.dart';
 import 'package:lazish/pages/word_matching.dart';
@@ -18,8 +20,9 @@ class ExercisePage extends StatefulWidget {
 class _ExercisePageState extends State<ExercisePage> {
   final PageController _controller = PageController(initialPage: 0);
   double _currentPage = 0;
+
   void nextPage() {
-    if (_currentPage == 2) {
+    if (_currentPage == 3) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -33,6 +36,7 @@ class _ExercisePageState extends State<ExercisePage> {
       );
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -87,21 +91,8 @@ class _ExercisePageState extends State<ExercisePage> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 80, vertical: 4),
-                        child: StepProgress(currentStep: _currentPage, steps: 3),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10, top: 8),
-                      child: Text(
-                        "987",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                        child:
+                            StepProgress(currentStep: _currentPage, steps: 4),
                       ),
                     ),
                   ),
@@ -110,10 +101,13 @@ class _ExercisePageState extends State<ExercisePage> {
             ),
             Expanded(
               child: PageView(
+                physics: NeverScrollableScrollPhysics(),
+                // Add this line to disable swiping
                 controller: _controller,
                 children: [
                   TranslationScreen(onContinue: nextPage),
                   SpeakingPage(onContinue: nextPage),
+                  ListeningPage(onContinue: nextPage),
                   WordMatching(onContinue: nextPage),
 
                 ],

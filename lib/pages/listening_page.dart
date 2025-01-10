@@ -1,29 +1,44 @@
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:speech_to_text/speech_recognition_result.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 
-class SpeakingPage extends StatefulWidget {
+import '../widgets/input_step_page.dart';
+
+class ListeningPage extends StatefulWidget {
   final VoidCallback onContinue;
 
-  const SpeakingPage({super.key, required this.onContinue,});
+  const ListeningPage({
+    super.key,
+    required this.onContinue,
+  });
 
   @override
-  State<SpeakingPage> createState() => _SpeakingPageState();
+  State<ListeningPage> createState() => _ListeningPageState();
 }
 
-class _SpeakingPageState extends State<SpeakingPage> {
+class _ListeningPageState extends State<ListeningPage> {
+  final List<String> selectedWords = [];
+  final List<String> availableWords = [
+    'is',
+    'eating',
+    'Bro',
+    'mom',
+    'sleep',
+    'Dad',
+    'and',
+    'I',
+    'drinking',
+    'We',
+    'is',
+  ];
+
   final FlutterTts flutterTts = FlutterTts();
-  final SpeechToText _speechToText = SpeechToText();
-  bool _speechEnabled = false;
-  String _wordSpoken = "";
-  bool _isTapped = false; // Add this variable
 
   @override
-  void initState() {
-    super.initState();
-    initSpeech();
+  void dispose() {
+    flutterTts.stop();
+    super.dispose();
   }
 
   Future<void> _speak(String text) async {
@@ -36,31 +51,15 @@ class _SpeakingPageState extends State<SpeakingPage> {
     }
   }
 
-  void initSpeech() async {
-    _speechEnabled = await _speechToText.initialize(
-      debugLogging: true,
-    );
-    log(_speechEnabled.toString());
-    setState(() {});
-  }
-
-  void _startListening() async {
-    await _speechToText.listen(
-      onResult: _onSpeechResult, // Truyền callback đúng
-      pauseFor: Duration(
-          seconds: 10), // Tạm dừng sau 5 giây không phát hiện giọng nói
-    );
-  }
-
-  void _stopListening() async {
-    await _speechToText.stop();
-    setState(() {});
-  }
-
-  void _onSpeechResult(SpeechRecognitionResult result) {
+  void _moveWord(String word, bool toSelected) {
     setState(() {
-      log(result.recognizedWords); // Log ra kết quả nhận dạng (debug
-      _wordSpoken = result.recognizedWords; // Đúng cú pháp
+      if (toSelected) {
+        availableWords.remove(word);
+        selectedWords.add(word);
+      } else {
+        selectedWords.remove(word);
+        availableWords.add(word);
+      }
     });
   }
 
@@ -83,13 +82,11 @@ class _SpeakingPageState extends State<SpeakingPage> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min, // Đảm bảo chiều cao tự động
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Top row with check icon and text
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Left side - Check icon and text
                         Row(
                           children: [
                             Container(
@@ -115,12 +112,9 @@ class _SpeakingPageState extends State<SpeakingPage> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
-                    // Spacer to push button to bottom
                     SizedBox(height: 40),
-                    // Continue Button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -176,15 +170,11 @@ class _SpeakingPageState extends State<SpeakingPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  // Đảm bảo chiều cao tự động
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  // Căn nội dung về phía trái
                   children: [
-                    // Top row with check icon and text
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Left side - Check icon and text
                         Row(
                           children: [
                             Container(
@@ -210,12 +200,11 @@ class _SpeakingPageState extends State<SpeakingPage> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                     SizedBox(height: 16),
                     Text(
-                      "Đáp án chính xác",
+                      "Sai rồi 😞",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 21,
@@ -224,7 +213,7 @@ class _SpeakingPageState extends State<SpeakingPage> {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      "Tôi đi bộ và cô ấy bơi.",
+                      "Dad is eating and mom is drinking",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,
@@ -232,7 +221,6 @@ class _SpeakingPageState extends State<SpeakingPage> {
                       ),
                     ),
                     SizedBox(height: 40),
-                    // Continue Button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -273,147 +261,102 @@ class _SpeakingPageState extends State<SpeakingPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 33),
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Nói lại câu sau',
+                'Đoạn âm thanh vừa nói gì?',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 24),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      'assets/lazish.png',
-                      height: 100,
-                      width: 100,
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Container(
-                        height: 86,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFFF9F9F9),
-                          // Background color
-                          border: Border.all(color: Colors.black),
-                          // Border color
-                          borderRadius: BorderRadius.circular(
-                              8), // Optional: rounded corners
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () =>
-                                  _speak("The call is from your mother"),
-                              child: const Icon(
-                                Icons.volume_up,
-                                color: Color(0xFFF583FC9),
-                                size: 30,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Flexible(
-                              // Đảm bảo Text không bị overflow
-                              child: Text(
-                                'The call is from your mother',
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                ),
-                                softWrap: true, // Cho phép xuống dòng
-                                overflow: TextOverflow.visible, // Không cắt bớt
-                              ),
-                            ),
-                          ],
+              InkWell(
+                onTap: () {
+                  _speak("Dad is eating and mom is drinking");
+                },
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset("assets/listening.png"),
+                      const SizedBox(height: 16),
+                      Text(
+                        "Tap to play audio",
+                        style: TextStyle(
+                          color: Color(0xFF9D9D9D),
+                          fontSize: 16,
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 24),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    _isTapped = !_isTapped;
-                  });
-                  if (_isTapped) {
-                    _startListening();
-                  } else {
-                    _stopListening();
-                  }
-                },
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 86,
-                        decoration: BoxDecoration(
-                          // Background color
-                          border: Border.all(color: Colors.black),
-                          // Border color
-                          borderRadius: BorderRadius.circular(
-                              8), // Optional: rounded corners
-                        ),
-                        child: _isTapped
-                            ? Image.asset(
-                                "assets/recording.png",
-                              )
-                            : Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.mic,
-                                    color: Color(0xFFF866CFE),
-                                    size: 30,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Flexible(
-                                    // Đảm bảo Text không bị overflow
-                                    child: Text(
-                                      'Tap to talks',
-                                      style: const TextStyle(
-                                        fontSize: 23,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFFF866CFE),
-                                      ),
-                                      softWrap: true, // Cho phép xuống dòng
-                                      overflow:
-                                          TextOverflow.visible, // Không cắt bớt
-                                    ),
-                                  ),
-                                ],
-                              ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: selectedWords
+                      .map((word) => GestureDetector(
+                    onTap: () => _moveWord(word, false),
+                    child: Chip(
+                      label: Text(word),
+                      backgroundColor: Colors.white,
+                      side: BorderSide(color: Colors.grey.shade300),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(21),
                       ),
                     ),
-                  ],
+                  ))
+                      .toList(),
                 ),
               ),
-              Container(
-                child: Text(_speechToText.isListening
-                    ? "listening..."
-                    : _speechEnabled
-                        ? "Tap the mic"
-                        : "Speech not available"),
+              const Spacer(),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: availableWords
+                    .map((word) => GestureDetector(
+                  onTap: () => _moveWord(word, true),
+                  child: Chip(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(21),
+                    ),
+                    label: Text(word),
+                    backgroundColor: Colors.white,
+                    side: BorderSide(color: Colors.grey.shade300),
+                  ),
+                ))
+                    .toList(),
               ),
-              Text(
-                _wordSpoken,
-                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 25),
-              ),
-              Spacer(),
+              const SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    _showSuccessBottomSheet(context);
+                    log(selectedWords.toString());
+                    if (listEquals(selectedWords,
+                        ['Dad', 'is', 'eating', 'and', 'mom', 'is', 'drinking'])) {
+                      _showSuccessBottomSheet(context);
+                    } else {
+                      _showErrorBottomSheet(context);
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF6949FF),

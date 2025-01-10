@@ -32,7 +32,7 @@ class WelcomePage extends StatelessWidget {
                     ],
                   ),
                   child: const Text(
-                    'Chào, Hiếu!',
+                    'Chào bạn!',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

@@ -12,6 +12,11 @@ class StepProgressPage extends StatefulWidget {
 
 class _StepProgressPageState extends State<StepProgressPage> {
   final PageController _controller = PageController(initialPage: 0);
+
+  final List<TextEditingController> _controllers = List.generate(
+    4, // Số lượng trang
+    (index) => TextEditingController(),
+  );
   double _currentPage = 0;
 
   @override
@@ -27,6 +32,9 @@ class _StepProgressPageState extends State<StepProgressPage> {
   @override
   void dispose() {
     _controller.dispose();
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -84,24 +92,28 @@ class _StepProgressPageState extends State<StepProgressPage> {
                     labelText: "Họ và tên",
                     hintText: "Nhập tên của bạn",
                     isPassword: false,
+                    controller: _controllers[0],
                   ),
                   InputStepPage(
                     title: "Bạn bao nhiêu tuổi?",
                     labelText: "Tuổi",
                     hintText: "Nhập tuổi của bạn",
                     isPassword: false,
+                    controller: _controllers[1],
                   ),
                   InputStepPage(
                     title: "Địa chỉ email của bạn là gì?",
                     labelText: "Email",
                     hintText: "Nhập email của bạn",
                     isPassword: false,
+                    controller: _controllers[2],
                   ),
                   InputStepPage(
                     title: "Tạo mật khẩu?",
                     labelText: "Mật khẩu",
                     hintText: "Nhập mật khẩu của bạn",
                     isPassword: true,
+                    controller: _controllers[3],
                   ),
                 ],
               ),
@@ -120,7 +132,7 @@ class _StepProgressPageState extends State<StepProgressPage> {
                   } else {
                     _controller.nextPage(
                         duration: Duration(milliseconds: 600),
-                        curve: Curves.easeInSine);
+                        curve: Curves.ease);
                   }
                 },
                 style: ElevatedButton.styleFrom(
