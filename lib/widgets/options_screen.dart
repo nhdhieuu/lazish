@@ -47,7 +47,6 @@ class OptionsScreen extends StatelessWidget {
                       Icon(Icons.verified,
                           size: 15, color: Colors.white), // Icon color
                       SizedBox(width: 6),
-
                     ],
                   ),
                   SizedBox(width: 6),
@@ -95,10 +94,7 @@ class OptionsScreen extends StatelessWidget {
                     ),
                   ),
                   // Icon color
-                  Text(
-                    '1123',
-                    style: TextStyle(color: Colors.white), // Text color
-                  ),
+
                   SizedBox(height: 100),
                 ],
               ),

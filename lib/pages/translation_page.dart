@@ -228,7 +228,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
                           ),
                         ),
                         child: Text(
-                          'TIẾP TỤC',
+                          'Thử lại',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
