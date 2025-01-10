@@ -6,8 +6,9 @@ import 'package:video_player/video_player.dart';
 
 class ContentScreen extends StatefulWidget {
   final String? src;
+  final bool isVisible;
 
-  const ContentScreen({Key? key, this.src}) : super(key: key);
+  const ContentScreen({Key? key, this.src, this.isVisible = true}) : super(key: key);
 
   @override
   _ContentScreenState createState() => _ContentScreenState();
@@ -23,9 +24,21 @@ class _ContentScreenState extends State<ContentScreen> {
     initializePlayer();
   }
 
+  @override
+  void didUpdateWidget(covariant ContentScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isVisible) {
+      _videoPlayerController.play();
+    } else {
+      _videoPlayerController.pause();
+    }
+  }
+
   Future initializePlayer() async {
     _videoPlayerController = VideoPlayerController.network(widget.src!);
+
     await Future.wait([_videoPlayerController.initialize()]);
+
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
       autoPlay: true,
