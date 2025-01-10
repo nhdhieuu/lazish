@@ -7,7 +7,7 @@ class InputStepPage extends StatelessWidget {
   final String hintText; // Gợi ý
   final bool isPassword; // Trạng thái mật khẩu
   final TextEditingController controller;
-
+  final String? Function(String?)? validator;
   const InputStepPage({
     super.key,
     required this.title,
@@ -15,6 +15,7 @@ class InputStepPage extends StatelessWidget {
     required this.hintText,
     this.isPassword = false,
     required this.controller,
+    this.validator,
   });
 
   @override
@@ -53,6 +54,7 @@ class InputStepPage extends StatelessWidget {
                           ? TextInputType.visiblePassword
                           : TextInputType.text,
                       controller: controller,
+                      validator: validator,
                     ),
                     const SizedBox(height: 20),
                   ],
