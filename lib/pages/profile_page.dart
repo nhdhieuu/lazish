@@ -42,8 +42,15 @@ class ProfilePage extends StatelessWidget {
                 ),
                 onPressed: () {
                   ElegantNotification.success(
-                    title:  Text("Đăng xuất thành công"),
-                    description:  Text(" Hẹn gặp lại! "),
+                    title: Text(
+                      "Đăng xuất thành công",
+                      style: TextStyle(
+                        color: Color(0xFF494949),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                    ),
+                    description:  Text("Hẹn gặp lại! "),
                     onDismiss: () {
                       print('Message when the notification is dismissed');
                     },
