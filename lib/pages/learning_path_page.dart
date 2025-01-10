@@ -106,6 +106,8 @@ class _LevelScreenState extends State<LearningPathPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+
         backgroundColor: Color(0xff6949ff),
         elevation: 0,
         titleTextStyle: TextStyle(fontSize: 16),

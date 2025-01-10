@@ -34,22 +34,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             Navigator.pop(context);
           },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.logout,
-              color: Color(0xFFFA9898),
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WelcomePage(),
-                ),
-              );
-            },
-          ),
-        ],
+
       ),
       body: SafeArea(
         child: SingleChildScrollView(
