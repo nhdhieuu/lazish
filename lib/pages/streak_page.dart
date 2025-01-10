@@ -1,8 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 
-
-class ChallengeContent extends StatelessWidget {
+class ChallengeContent extends StatefulWidget {
   const ChallengeContent({Key? key}) : super(key: key);
+
+  @override
+  State<ChallengeContent> createState() => _ChallengeContentState();
+}
+
+class _ChallengeContentState extends State<ChallengeContent> {
+  late Set<DateTime> _highlightedDays;
+  late DateTime _focusedDay;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusedDay = DateTime.now();
+    // Generate last 4 days including today, with time part removed
+    _highlightedDays = List.generate(4, (i) {
+      final date = DateTime.now().subtract(Duration(days: i));
+      return DateTime(date.year, date.month, date.day);
+    }).toSet();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,18 +30,9 @@ class ChallengeContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header with Progress
           _buildHeader(),
           const SizedBox(height: 20),
-          CalendarDatePicker(
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2025, 1),
-            lastDate: DateTime(2025, 12),
-            onDateChanged: (date) {
-            },
-          ),
-          // Calendar
-          /*_buildCalendar(),*/
+          _buildCalendar(),
         ],
       ),
     );
@@ -31,8 +41,8 @@ class ChallengeContent extends StatelessWidget {
   Widget _buildHeader() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children:  [
-        Text(
+      children: [
+        const Text(
           'Chuỗi (ngày)',
           style: TextStyle(
             color: Color(0xFF585859),
@@ -41,14 +51,14 @@ class ChallengeContent extends StatelessWidget {
           ),
         ),
         Row(
-          children:[
+          children: [
             Image.asset(
               'assets/fire.png',
               width: 24,
               height: 24,
             ),
             const SizedBox(width: 5),
-            Text(
+            const Text(
               '4 ngày',
               style: TextStyle(
                 color: Color(0xFF868687),
@@ -56,81 +66,40 @@ class ChallengeContent extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-          ]
+          ],
         )
       ],
     );
   }
 
-
-
-  Widget _buildInfoCards() {
-    return Row(
-      children: [
-        Expanded(
-          child: _buildInfoCard(
-            icon: Icons.local_fire_department,
-            iconColor: Colors.deepOrange,
-            backgroundColor: Colors.deepOrange[50]!,
-            title: '4 days',
-            subtitle: 'challenge done',
-          ),
+  Widget _buildCalendar() {
+    return TableCalendar(
+      firstDay: DateTime(2025, 1),
+      lastDay: DateTime(2025, 12),
+      focusedDay: _focusedDay,
+      currentDay: DateTime.now(),
+      calendarStyle: const CalendarStyle(
+        todayDecoration: BoxDecoration(
+          color: Colors.blue,
+          shape: BoxShape.circle,
         ),
-        const SizedBox(width: 15),
-        Expanded(
-          child: _buildInfoCard(
-            icon: Icons.calendar_today,
-            iconColor: Colors.blue,
-            backgroundColor: Colors.blue[50]!,
-            title: '10 days',
-            subtitle: 'remaining',
-          ),
+        selectedDecoration: BoxDecoration(
+          color: Colors.orange,
+          shape: BoxShape.circle,
         ),
-      ],
-    );
-  }
-
-  Widget _buildInfoCard({
-    required IconData icon,
-    required Color iconColor,
-    required Color backgroundColor,
-    required String title,
-    required String subtitle,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey[200]!),
+        defaultTextStyle: TextStyle(color: Colors.black),
+        outsideDaysVisible: false,
       ),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: backgroundColor,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: iconColor, size: 24),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            subtitle,
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontSize: 14,
-            ),
-          ),
-        ],
-      ),
+      selectedDayPredicate: (day) {
+        // Remove time part for comparison
+        final dateOnly = DateTime(day.year, day.month, day.day);
+        return _highlightedDays.contains(dateOnly);
+      },
+      onDaySelected: (selectedDay, focusedDay) {
+        setState(() {
+          _focusedDay = focusedDay;
+        });
+      },
     );
   }
 }
