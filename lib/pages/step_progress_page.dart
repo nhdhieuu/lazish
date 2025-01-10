@@ -17,7 +17,37 @@ class _StepProgressPageState extends State<StepProgressPage> {
     4, // Số lượng trang
     (index) => TextEditingController(),
   );
+  final List<GlobalKey<FormState>> _formKeys = List.generate(
+    4,
+    (index) => GlobalKey<FormState>(),
+  );
   double _currentPage = 0;
+
+  void _handleNext() {
+    final currentForm = _formKeys[_currentPage.toInt()].currentState;
+
+    if (currentForm != null && !currentForm.validate()) {
+      // Nếu form không hợp lệ, dừng chuyển bước
+      return;
+    }
+
+    if (_currentPage == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SuccessfullPage(),
+        ),
+      );
+    } else {
+      _controller.nextPage(
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.ease,
+      );
+      setState(() {
+        _currentPage++;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -76,7 +106,8 @@ class _StepProgressPageState extends State<StepProgressPage> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 80, vertical: 4),
-                        child: StepProgress(currentStep: _currentPage, steps: 4),
+                        child:
+                            StepProgress(currentStep: _currentPage, steps: 4),
                       ),
                     ),
                   ),
@@ -87,33 +118,80 @@ class _StepProgressPageState extends State<StepProgressPage> {
               child: PageView(
                 controller: _controller,
                 children: [
-                  InputStepPage(
-                    title: "Tên bạn là gì?",
-                    labelText: "Họ và tên",
-                    hintText: "Nhập tên của bạn",
-                    isPassword: false,
-                    controller: _controllers[0],
+                  Form(
+                    key: _formKeys[0],
+                    child: InputStepPage(
+                      title: "Tên bạn là gì?",
+                      labelText: "Họ và tên",
+                      hintText: "Nhập tên của bạn",
+                      isPassword: false,
+                      controller: _controllers[0],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Họ và tên không được để trống';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  InputStepPage(
-                    title: "Bạn bao nhiêu tuổi?",
-                    labelText: "Tuổi",
-                    hintText: "Nhập tuổi của bạn",
-                    isPassword: false,
-                    controller: _controllers[1],
+                  Form(
+                    key: _formKeys[1],
+                    child: InputStepPage(
+                      title: "Bạn bao nhiêu tuổi?",
+                      labelText: "Tuổi",
+                      hintText: "Nhập tuổi của bạn",
+                      isPassword: false,
+                      controller: _controllers[1],
+                      validator: (value) {
+                        final age = int.tryParse(value ?? '');
+                        if (value == null || value.isEmpty) {
+                          return 'Tuổi không được để trống';
+                        }
+                        if (age == null || age <= 0) {
+                          return 'Tuổi phải là số hợp lệ';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  InputStepPage(
-                    title: "Địa chỉ email của bạn là gì?",
-                    labelText: "Email",
-                    hintText: "Nhập email của bạn",
-                    isPassword: false,
-                    controller: _controllers[2],
+                  Form(
+                    key: _formKeys[2],
+                    child: InputStepPage(
+                      title: "Địa chỉ email của bạn là gì?",
+                      labelText: "Email",
+                      hintText: "Nhập email của bạn",
+                      isPassword: false,
+                      controller: _controllers[2],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Email không được để trống';
+                        }
+                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                            .hasMatch(value)) {
+                          return 'Email không hợp lệ';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  InputStepPage(
-                    title: "Tạo mật khẩu?",
-                    labelText: "Mật khẩu",
-                    hintText: "Nhập mật khẩu của bạn",
-                    isPassword: true,
-                    controller: _controllers[3],
+                  Form(
+                    key: _formKeys[3],
+                    child: InputStepPage(
+                      title: "Tạo mật khẩu?",
+                      labelText: "Mật khẩu",
+                      hintText: "Nhập mật khẩu của bạn",
+                      isPassword: true,
+                      controller: _controllers[3],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Mật khẩu không được để trống';
+                        }
+                        if (value.length < 6) {
+                          return 'Mật khẩu phải dài ít nhất 6 ký tự';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -121,20 +199,7 @@ class _StepProgressPageState extends State<StepProgressPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: ElevatedButton(
-                onPressed: () {
-                  if (_currentPage == 3) {
-                    Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SuccessfullPage(),
-                                ),
-                        );
-                  } else {
-                    _controller.nextPage(
-                        duration: Duration(milliseconds: 600),
-                        curve: Curves.ease);
-                  }
-                },
+                onPressed: _handleNext,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xff6949ff),
                   minimumSize: const Size(double.infinity, 55),
