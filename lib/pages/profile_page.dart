@@ -1,3 +1,4 @@
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lazish/pages/edit_profile_page.dart';
@@ -40,6 +41,13 @@ class ProfilePage extends StatelessWidget {
                   color: Color(0xFFFA9898),
                 ),
                 onPressed: () {
+                  ElegantNotification.success(
+                    title:  Text("Đăng xuất thành công"),
+                    description:  Text(" Hẹn gặp lại! "),
+                    onDismiss: () {
+                      print('Message when the notification is dismissed');
+                    },
+                  ).show(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(

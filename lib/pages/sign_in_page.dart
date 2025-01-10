@@ -157,6 +157,13 @@ class _SignInPageState extends State<SignInPage> {
             child: ElevatedButton(
               onPressed: () {
                 // Xử lý đăng nhập
+                ElegantNotification.success(
+                  title:  Text("Đăng nhập thành công"),
+                  description:  Text("Chào mừng bạn đến với Lazish!"),
+                  onDismiss: () {
+                    print('Message when the notification is dismissed');
+                  },
+                ).show(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(

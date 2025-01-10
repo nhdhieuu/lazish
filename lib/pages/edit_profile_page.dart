@@ -1,3 +1,4 @@
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:lazish/pages/welcome_page.dart';
 
@@ -62,16 +63,41 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 _buildInputField(
                   label: "Họ và tên",
                   initialValue: "Phan Châu Hoàng",
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Họ và tên không được để trống';
+                    }
+                    return null;
+                  },
                 ),
                 _buildInputField(
                   label: "Số điện thoại",
                   initialValue: "+84090000987",
                   keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Số điện thoại không được để trống';
+                    }
+                    if (!RegExp(r'^\+84\d{9,10}$').hasMatch(value)) {
+                      return 'Số điện thoại không hợp lệ';
+                    }
+                    return null;
+                  },
                 ),
                 _buildInputField(
                   label: "Email",
                   initialValue: "phanchauhoang@gmail.com",
                   keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Email không được để trống';
+                    }
+                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                        .hasMatch(value)) {
+                      return 'Email không hợp lệ';
+                    }
+                    return null;
+                  },
                 ),
                 _buildInputField(
                   label: "Ngày sinh",
@@ -81,6 +107,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     Icons.calendar_month,
                     color: Color(0xFF6949FF),
                   ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Ngày sinh không được để trống';
+                    }
+                    return null;
+                  },
                 ),
                 _buildInputField(
                   label: "Quốc tịch",
@@ -90,6 +122,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     Icons.arrow_drop_down,
                     color: Color(0xFF6949FF),
                   ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Quốc tịch không được để trống';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 24),
                 SizedBox(
@@ -98,8 +136,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Handle form submission
+                        ElegantNotification.success(
+                          title:  Text("Cập nhật thành công"),
+                          description:  Text(" Thông tin của bạn đã được cập nhật thành công! "),
+                          onDismiss: () {
+                            print('Message when the notification is dismissed');
+                          },
+                        ).show(context);
+                        Navigator.pop(context);
                       }
+
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF6949FF),
@@ -131,6 +177,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     bool readOnly = false,
     TextInputType? keyboardType,
     Widget? suffix,
+    String? Function(String?)? validator,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,6 +203,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               borderSide: BorderSide(color: Color(0xFF6949FF)),
             ),
           ),
+          validator: validator,
         ),
         const SizedBox(height: 16),
       ],
