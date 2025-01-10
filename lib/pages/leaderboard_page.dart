@@ -24,10 +24,24 @@ final List<String> randomNames = [
   'Skyler'
 ];
 
-final List<LeaderBoard> leaderBoardData = List.generate(40, (index) {
+final List<LeaderBoard> weeklyData = List.generate(40, (index) {
   final String randomName =
       '${randomNames[random.nextInt(randomNames.length)]} ${random.nextInt(999)}';
   final int randomExp = random.nextInt(1000) + 50; // Từ 50 đến 1049
+  return LeaderBoard(name: randomName, exp: randomExp);
+});
+
+final List<LeaderBoard> monthlyData = List.generate(40, (index) {
+  final String randomName =
+      '${randomNames[random.nextInt(randomNames.length)]} ${random.nextInt(999)}';
+  final int randomExp = random.nextInt(2000) + 500;
+  return LeaderBoard(name: randomName, exp: randomExp);
+});
+
+final List<LeaderBoard> allTimeData = List.generate(40, (index) {
+  final String randomName =
+      '${randomNames[random.nextInt(randomNames.length)]} ${random.nextInt(999)}';
+  final int randomExp = random.nextInt(5000) + 1000;
   return LeaderBoard(name: randomName, exp: randomExp);
 });
 
@@ -39,11 +53,27 @@ class LeaderboardScreen extends StatefulWidget {
 }
 
 class _LeaderboardScreenState extends State<LeaderboardScreen> {
+  String selectedFilter = 'Hàng tuần';
   @override
   void initState() {
     super.initState();
     // Sắp xếp danh sách theo exp giảm dần
-    leaderBoardData.sort((a, b) => b.exp.compareTo(a.exp));
+    weeklyData.sort((a, b) => b.exp.compareTo(a.exp));
+    monthlyData.sort((a, b) => b.exp.compareTo(a.exp));
+    allTimeData.sort((a, b) => b.exp.compareTo(a.exp));
+  }
+
+  List<LeaderBoard> _getFilteredData() {
+    switch (selectedFilter) {
+      case 'Hàng tuần':
+        return weeklyData;
+      case 'Hàng tháng':
+        return monthlyData;
+      case 'Mọi thời điểm':
+        return allTimeData;
+      default:
+        return weeklyData;
+    }
   }
 
   @override
@@ -84,20 +114,32 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 children: [
                   _FilterButton(
                     text: 'Hàng tuần',
-                    isSelected: true,
-                    onTap: () {},
+                    isSelected: selectedFilter == 'Hàng tuần',
+                    onTap: () {
+                      setState(() {
+                        selectedFilter = 'Hàng tuần';
+                      });
+                    },
                   ),
                   const SizedBox(width: 12),
                   _FilterButton(
                     text: 'Hàng tháng',
-                    isSelected: false,
-                    onTap: () {},
+                    isSelected: selectedFilter == 'Hàng tháng',
+                    onTap: () {
+                      setState(() {
+                        selectedFilter = 'Hàng tháng';
+                      });
+                    },
                   ),
                   const SizedBox(width: 12),
                   _FilterButton(
                     text: 'Mọi thời điểm',
-                    isSelected: false,
-                    onTap: () {},
+                    isSelected: selectedFilter == 'Mọi thời điểm',
+                    onTap: () {
+                      setState(() {
+                        selectedFilter = 'Mọi thời điểm';
+                      });
+                    },
                   ),
                 ],
               ),
@@ -105,17 +147,22 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
 
             // Leaderboard List
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(16),
-                itemCount: leaderBoardData.length,
-                itemBuilder: (context, index) {
-                  final item = leaderBoardData[index];
-                  return _LeaderboardItem(
-                    rank: index + 1,
-                    name: item.name,
-                    exp: item.exp,
-                  );
-                },
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: ListView.builder(
+                  key: ValueKey<String>(
+                      selectedFilter), 
+                  padding: const EdgeInsets.all(16),
+                  itemCount: _getFilteredData().length,
+                  itemBuilder: (context, index) {
+                    final item = _getFilteredData()[index];
+                    return _LeaderboardItem(
+                      rank: index + 1,
+                      name: item.name,
+                      exp: item.exp,
+                    );
+                  },
+                ),
               ),
             ),
           ],
@@ -197,7 +244,7 @@ class _LeaderboardItem extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: _getRankColor().withOpacity(0.2),
+              color: _getRankColor().withOpacity(0.3),
               shape: BoxShape.circle,
             ),
             child: Center(
@@ -230,20 +277,25 @@ class _LeaderboardItem extends StatelessWidget {
               ),
             ),
           ),
-
           // XP
           Row(
             children: [
               Image.asset("assets/gem.png", width: 20, height: 20),
               const SizedBox(width: 4),
-              Text(
-                '$exp',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+              SizedBox(
+                width: 40,
+                child: Text(
+                  '$exp',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],
+          ),
+          const SizedBox(
+            width: 2,
           )
           /*Text(
             '$exp',
