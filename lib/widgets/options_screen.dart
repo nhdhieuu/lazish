@@ -4,12 +4,16 @@ class OptionsScreen extends StatelessWidget {
   final Function()? onLikePressed;
   final Function()? onDownloadPressed;
   final bool isLiked;
+  final Function()? onSavePressed;
+  final bool isSaved;
 
   const OptionsScreen({
     Key? key,
     this.onLikePressed,
     this.onDownloadPressed,
     this.isLiked = false,
+    this.onSavePressed,
+    required this.isSaved,
   }) : super(key: key);
 
   @override
@@ -24,6 +28,7 @@ class OptionsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 110),
                   Row(
@@ -42,15 +47,7 @@ class OptionsScreen extends StatelessWidget {
                       Icon(Icons.verified,
                           size: 15, color: Colors.white), // Icon color
                       SizedBox(width: 6),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Follow',
-                          style: TextStyle(
-                            color: Colors.white, // Text color
-                          ),
-                        ),
-                      ),
+
                     ],
                   ),
                   SizedBox(width: 6),
@@ -79,6 +76,7 @@ class OptionsScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: onLikePressed,
                     child: Icon(
+                      size: 40,
                       isLiked ? Icons.favorite : Icons.favorite_outline,
                       color: Colors.white,
                     ),
@@ -88,7 +86,15 @@ class OptionsScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white), // Text color
                   ),
                   SizedBox(height: 20),
-                  Icon(Icons.bookmark_border, color: Colors.white), // Icon color
+                  GestureDetector(
+                    onTap: onSavePressed,
+                    child: Icon(
+                      size: 40,
+                      isSaved ? Icons.bookmark : Icons.bookmark_border,
+                      color: Colors.white,
+                    ),
+                  ),
+                  // Icon color
                   Text(
                     '1123',
                     style: TextStyle(color: Colors.white), // Text color

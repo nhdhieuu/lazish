@@ -7,8 +7,14 @@ import 'package:video_player/video_player.dart';
 class ContentScreen extends StatefulWidget {
   final String? src;
   final bool isVisible;
+  final bool isSaved;
 
-  const ContentScreen({Key? key, this.src, this.isVisible = true}) : super(key: key);
+  const ContentScreen({
+    Key? key,
+    this.src,
+    this.isVisible = true,
+    this.isSaved = false,
+  }) : super(key: key);
 
   @override
   _ContentScreenState createState() => _ContentScreenState();
@@ -18,6 +24,8 @@ class _ContentScreenState extends State<ContentScreen> {
   late VideoPlayerController _videoPlayerController;
   ChewieController? _chewieController;
   bool _liked = false;
+  bool _saved = false;
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +63,12 @@ class _ContentScreenState extends State<ContentScreen> {
     super.dispose();
   }
 
+  void _handleSave() {
+    setState(() {
+      _saved = !_saved;
+    });
+  }
+
   void _handleLike() {
     setState(() {
       _liked = !_liked;
@@ -70,6 +84,15 @@ class _ContentScreenState extends State<ContentScreen> {
                 _chewieController!.videoPlayerController.value.isInitialized
             ? GestureDetector(
                 onDoubleTap: _handleLike,
+                onTap: () {
+                  setState(() {
+                    if (_videoPlayerController.value.isPlaying) {
+                      _videoPlayerController.pause();
+                    } else {
+                      _videoPlayerController.play();
+                    }
+                  });
+                },
                 child: Chewie(
                   controller: _chewieController!,
                 ),
@@ -87,6 +110,8 @@ class _ContentScreenState extends State<ContentScreen> {
             child: LikeIcon(),
           ),
         OptionsScreen(
+          isSaved: widget.isSaved ? true : _saved,
+          onSavePressed: _handleSave,
           isLiked: _liked,
           onLikePressed: _handleLike,
         )

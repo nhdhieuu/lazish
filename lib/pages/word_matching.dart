@@ -214,7 +214,7 @@ class _WordMatchingState extends State<WordMatching> {
                     ? checkMatch
                     : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF6949FF),
+                  backgroundColor: allMatched() ? Color(0xFF1ADB98):   Color(0xFF6949FF),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
