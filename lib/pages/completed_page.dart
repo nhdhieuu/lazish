@@ -115,12 +115,8 @@ class CompletedPage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         // Xử lý khi nhấn nút "BẮT ĐẦU"
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MainLayoutPage(),
-                          ),
-                        );
+                        int count = 0;
+                        Navigator.of(context).popUntil((_) => count++ >= 2);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff6949ff),

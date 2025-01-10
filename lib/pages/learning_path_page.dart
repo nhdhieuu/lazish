@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lazish/pages/streak_page.dart';
 import 'package:lazish/widgets/learning_button.dart';
 
 class LearningPathPage extends StatefulWidget {
@@ -18,7 +19,29 @@ class _LevelScreenState extends State<LearningPathPage> {
   final GlobalKey firstButtonKey = GlobalKey();
   List<LearningButton> buttons = [];
   List<LearningButton> buttons2 = [];
-
+  void showChallengeTrackerBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      builder: (context) =>
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery
+                  .of(context)
+                  .viewInsets
+                  .bottom,
+            ),
+            child: const SingleChildScrollView(
+              child:
+              ChallengeContent(), // Sử dụng ChallengeContent như bạn định nghĩa
+            ),
+          ),
+    );
+  }
   @override
   void initState() {
     super.initState();
@@ -135,12 +158,17 @@ class _LevelScreenState extends State<LearningPathPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ClipOval(
-                  child: Image.asset(
-                    'assets/fire.png', // Đường dẫn đến hình biểu tượng
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.cover,
+                InkWell(
+                  onTap: () {
+                    showChallengeTrackerBottomSheet(context);
+                  },
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/fire.png', // Đường dẫn đến hình biểu tượng
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 6),
