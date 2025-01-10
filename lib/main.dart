@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lazish/pages/exercise_page.dart';
-import 'package:lazish/pages/home_page.dart';
+
+import 'package:lazish/pages/learning_path_page.dart';
 import 'package:lazish/pages/main_layout_page.dart';
-import 'package:lazish/pages/translation_page.dart';
-import 'package:lazish/pages/welcome_page.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: WelcomePage(),
+      home: MainLayoutPage(),
     );
   }
 }

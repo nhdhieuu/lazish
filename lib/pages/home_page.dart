@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazish/pages/exercise_page.dart';
+import 'package:lazish/pages/learning_path_page.dart';
 import 'package:lazish/widgets/topic_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -98,9 +99,16 @@ class HomePage extends StatelessWidget {
             title: 'Động vật',
             buttonText: 'View',
             imagePath: 'assets/animal.png',
-            progress: 15,
+            progress: 13,
             total: 15,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LearningPathPage(),
+                ),
+              );
+            },
             color: const Color(0xffA1D7FF),
           ),
           TopicCard(
@@ -125,7 +133,14 @@ class HomePage extends StatelessWidget {
             imagePath: 'assets/abc.png',
             progress: 9,
             total: 15,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LearningPathPage(),
+                ),
+              );
+            },
             color: const Color(0xffFFDA35),
     
           ),
@@ -135,7 +150,14 @@ class HomePage extends StatelessWidget {
             imagePath: 'assets/nature.png',
             progress: 0,
             total: 15,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LearningPathPage(),
+                ),
+              );
+            },
             color: const Color(0xffFF8D8D),
           ),
         ],
