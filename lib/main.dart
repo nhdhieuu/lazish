@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:lazish/pages/learning_path_page.dart';
 import 'package:lazish/pages/main_layout_page.dart';
 
 

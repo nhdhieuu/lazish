@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lazish/pages/exercise_page.dart';
 
 class LearningButton extends StatefulWidget {
   final IconData icon;
@@ -28,6 +29,7 @@ class _LearningButtonState extends State<LearningButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  bool _isPressed = false;
 
   @override
   void initState() {
@@ -58,122 +60,159 @@ class _LearningButtonState extends State<LearningButton>
     return SizedBox(
       width: 118,
       height: 100,
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.elliptical(75, 60)),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  widget.mainColor,
-                  widget.mainColor,
-                ],
-              ),
-              boxShadow: [
+      child: GestureDetector(
+        onTapDown: (_) {
+          setState(() {
+            _isPressed = true; // Khi nhấn giữ
+          });
+        },
+        onTapUp: (_) {
+          setState(() {
+            _isPressed = false; // Khi thả ra
+          });
+
+          // Điều hướng sang màn hình khác
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ExercisePage(),
+            ),
+          );
+        },
+        onTapCancel: () {
+          setState(() {
+            _isPressed = false; // Khi hủy bỏ nhấn
+          });
+        },
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.elliptical(75, 60)),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: _isPressed
+                    ? [widget.mainColor.withOpacity(0.7), widget.mainColor.withOpacity(0.7)] // Màu tối hơn khi nhấn
+                    : [widget.mainColor, widget.mainColor],
+                ),
+                boxShadow: [
                 BoxShadow(
-                  color: widget.shadowColor,
-                  offset: Offset(0, 12),
+                  color: _isPressed
+                      ? widget.shadowColor.withOpacity(0.7) // Hiệu ứng bóng nhỏ hơn khi nhấn
+                      : widget.shadowColor,
+                  offset: const Offset(0, 12),
                 ),
               ],
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: CustomPaint(
-                painter: ShineEffectPainter(),
-                child: Container(),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CustomPaint(
+                  painter: ShineEffectPainter(),
+                  child: Container(),
+                ),
               ),
             ),
-          ),
 
-          // White rounded square with icon or just star icon
-          Center(
-            child: widget.icon == Icons.star
-                ? Icon(
-                    widget.icon,
-                    size: 44,
-                    color: widget.color,
-                  )
-                : widget.icon == Icons.lock
-                    ? Icon(
-                        widget.icon,
-                        size: 44,
-                        color: widget.color,
-                      )
-                    : Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 5,
-                              offset: Offset(0, 2),
+            // White rounded square with icon or just star icon
+            Center(
+              child: widget.icon == Icons.star
+                  ? Icon(
+                      widget.icon,
+                      size: 44,
+                      color: widget.color,
+                    )
+                  : widget.icon == Icons.lock
+                      ? Icon(
+                          widget.icon,
+                          size: 44,
+                          color: widget.color,
+                        )
+                      : Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 5,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            widget.icon,
+                            size: 26,
+                            color: widget.color,
+                          ),
+                        ),
+            ),
+
+            // Kiểm tra nếu currentAssignment là true mới hiển thị chat bubble
+            if (widget.currentAssignment)
+              Positioned(
+                left: 15,
+                top: 0,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ExercisePage(),
+                      ),
+                    );
+                  },
+                  child: AnimatedBuilder(
+                    animation: _controller,
+                    builder: (context, child) {
+                      return Transform.translate(
+                        offset: Offset(
+                            0, _controller.value * 2), // Di chuyển lên xuống
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.3),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 6),
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: Color(
+                                      0xff543acc), // Màu viền (có thể thay đổi)
+                                  width: 2, // Độ dày của viền
+                                ),
+                              ),
+                              child: const Text(
+                                'Bắt đầu!',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff543acc),
+                                ),
+                              ),
+                            ),
+                            CustomPaint(
+                              painter: ChatBubbleTrianglePainter(Colors.white),
+                              size: const Size(20, 10),
                             ),
                           ],
                         ),
-                        child: Icon(
-                          widget.icon,
-                          size: 26,
-                          color: widget.color,
-                        ),
-                      ),
-          ),
-
-          // Kiểm tra nếu currentAssignment là true mới hiển thị chat bubble
-          if (widget.currentAssignment)
-            Positioned(
-              left: 15,
-              top: 0,
-              child: AnimatedBuilder(
-                animation: _controller,
-                builder: (context, child) {
-                  return Transform.translate(
-                    offset:
-                        Offset(0, _controller.value * 2), // Di chuyển lên xuống
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.3),
-                                blurRadius: 12,
-                                offset: const Offset(0, 6),
-                              ),
-                            ],
-                            border: Border.all(
-                              color: Color(0xff543acc), // Màu viền (có thể thay đổi)
-                              width: 2, // Độ dày của viền
-                            ),
-                          ),
-                          child: const Text(
-                            'Bắt đầu!',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff543acc),
-                            ),
-                          ),
-                        ),
-                        CustomPaint(
-                          painter: ChatBubbleTrianglePainter(Colors.white),
-                          size: const Size(20, 10),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                      );
+                    },
+                  ),
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -238,7 +277,7 @@ class ChatBubbleTrianglePainter extends CustomPainter {
 
     // Vẽ bóng đổ
     canvas.drawShadow(path, Colors.black.withOpacity(0.1), 4, false);
-    
+
     // Vẽ phần bên trong tam giác
     canvas.drawPath(path, paint);
 
@@ -255,4 +294,3 @@ class ChatBubbleTrianglePainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
-

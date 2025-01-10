@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lazish/pages/exercise_page.dart';
 import 'package:lazish/pages/learning_path_page.dart';
 import 'package:lazish/widgets/topic_card.dart';
 
@@ -105,7 +104,7 @@ class HomePage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LearningPathPage(),
+                  builder: (context) => LearningPathPage(title: "Động vật", color: Color(0xffA1D7FF),),
                 ),
               );
             },
@@ -121,7 +120,7 @@ class HomePage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ExercisePage(),
+                  builder: (context) => LearningPathPage(title: "Thành phố", color: Color.fromARGB(255, 68, 236, 53),),
                 ),
               );
             },
@@ -137,7 +136,7 @@ class HomePage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LearningPathPage(),
+                  builder: (context) => LearningPathPage(title: "Chữ cái", color: Color(0xffFFDA35),),
                 ),
               );
             },
@@ -154,7 +153,7 @@ class HomePage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LearningPathPage(),
+                  builder: (context) => LearningPathPage(title: "Thiên nhiên", color: Color(0xffFF8D8D),),
                 ),
               );
             },

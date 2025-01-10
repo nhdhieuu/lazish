@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lazish/widgets/learning_button.dart';
 
 class LearningPathPage extends StatefulWidget {
+  final String title;
+  final Color color;
+
+  const LearningPathPage({
+    Key? key,
+    required this.title,
+    required this.color,
+  }) : super(key: key);
   @override
   _LevelScreenState createState() => _LevelScreenState();
 }
@@ -9,6 +17,7 @@ class LearningPathPage extends StatefulWidget {
 class _LevelScreenState extends State<LearningPathPage> {
   final GlobalKey firstButtonKey = GlobalKey();
   List<LearningButton> buttons = [];
+  List<LearningButton> buttons2 = [];
 
   @override
   void initState() {
@@ -19,65 +28,75 @@ class _LevelScreenState extends State<LearningPathPage> {
         color: Colors.white,
         mainColor: Color(0xffffc106),
         shadowColor: Color(0xffff981f),
-        xOffset: 0,
-        yOffset: -30,
+        xOffset: -40,
+        yOffset: -35,
       ),
       LearningButton(
         icon: Icons.check,
         color: Color(0xffffc106),
         mainColor: Color(0xffffc106),
         shadowColor: Color(0xffff981f),
-        xOffset: -60,
-        yOffset: 90,
+        xOffset: 10,
+        yOffset: 80,
       ),
       LearningButton(
         icon: Icons.description,
         color: Color(0xffffc106),
         mainColor: Color(0xffffc106),
         shadowColor: Color(0xffff981f),
-        xOffset: -120,
-        yOffset: 210,
+        xOffset: -40,
+        yOffset: 195,
       ),
       LearningButton(
-        icon: Icons.check,
+        icon: Icons.emoji_events,
         color: Color(0xffffc106),
         mainColor: Color(0xffffc106),
         shadowColor: Color(0xffff981f),
-        xOffset: -180,
-        yOffset: 330,
+        xOffset: -95,
+        yOffset: 310,
       ),
+    ];
+    buttons2 = [
       LearningButton(
         icon: Icons.book,
         color: Color(0xffffc106),
         mainColor: Color(0xffffc106),
         shadowColor: Color(0xffff981f),
-        xOffset: -120,
-        yOffset: 450,
+        xOffset: -95,
+        yOffset: 480,
       ),
       LearningButton(
         icon: Icons.adb_outlined,
         color: Color(0xffffc106),
         mainColor: Color(0xffffc106),
         shadowColor: Color(0xffff981f),
-        xOffset: -60,
-        yOffset: 570,
+        xOffset: -145,
+        yOffset: 595,
+      ),
+      LearningButton(
+        icon: Icons.adb_outlined,
+        color: Color(0xffffc106),
+        mainColor: Color(0xffffc106),
+        shadowColor: Color(0xffff981f),
+        xOffset: -195,
+        yOffset: 710,
       ),
       LearningButton(
         icon: Icons.abc,
         color: Color(0xff9e9e9e),
-       mainColor: Color.fromARGB(255, 117, 86, 254),
+        mainColor: Color.fromARGB(255, 117, 86, 254),
         shadowColor: Color(0xff543acc),
         currentAssignment: true,
-        xOffset: 0,
-        yOffset: 690,
+        xOffset: -145,
+        yOffset: 825,
       ),
       LearningButton(
         icon: Icons.emoji_events,
         color: Color(0xff9e9e9e),
         mainColor: Color(0xffe0e0e0),
         shadowColor: Color(0xffbdbdbe),
-        xOffset: -60,
-        yOffset: 810,
+        xOffset: -95,
+        yOffset: 940,
       ),
     ];
   }
@@ -86,29 +105,142 @@ class _LevelScreenState extends State<LearningPathPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Color(0xff6949ff),
+        elevation: 0,
+        titleTextStyle: TextStyle(fontSize: 16),
+        automaticallyImplyLeading: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Ngọn lửa và số
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget.title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              width: 40,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ClipOval(
+                  child: Image.asset(
+                    'assets/fire.png', // Đường dẫn đến hình biểu tượng
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                const Text(
+                  '4',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            // Hình lục giác và số
+            const SizedBox(
+              width: 40,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ClipOval(
+                  child: Image.asset(
+                    'assets/gem.png', // Đường dẫn đến hình biểu tượng
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                const Text(
+                  '957',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         // Đảm bảo nội dung có thể cuộn
         child: Column(
           children: [
-            const SizedBox(height: 50),
-            Image.asset(
-              'assets/trophy.png', // Đường dẫn đến tài nguyên hình ảnh của bạn
-              width: 130, // Đặt kích thước phù hợp
-              height: 125, // Đặt kích thước phù hợp
-              fit: BoxFit.cover, // Đảm bảo hình ảnh được căn chỉnh đẹp
+            const SizedBox(height: 16,),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
+              decoration: BoxDecoration(
+                color: widget.color, // Màu nền của container
+                borderRadius: BorderRadius.circular(12), // Bo tròn các góc
+              ),
+              child: Text(
+                "Chủ đề: ${widget.title}",
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white, // Màu chữ
+                ),
+              ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 16,),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 1.5,
+                      color: Colors.grey[300],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Phần 1',
+                      style: TextStyle(
+                        color: Colors.grey[500],
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 1.0,
+                      color: Colors.grey[300],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
             LearningButton(
-              icon: Icons.lock,
-              color: Color(0xff9e9e9e),
+              icon: Icons.star,
+              color: Colors.white,
+              mainColor: Color(0xffffc106),
+              shadowColor: Color(0xffff981f),
               xOffset: 0,
               yOffset: 0,
-              mainColor: Color(0xffe0e0e0),
-              shadowColor: Color(0xffbdbdbe),
             ),
             SizedBox(
-              // Điều chỉnh chiều cao để đảm bảo không gian cho các button
-              height: 1000, // Chiếm phần lớn không gian màn hình
+              height: 1115,
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   double startX = constraints.maxWidth * 0.6;
@@ -126,11 +258,52 @@ class _LevelScreenState extends State<LearningPathPage> {
                           child: button,
                         );
                       }).toList(),
+                      Positioned(
+                        top: startY + 435,
+                        // Adjust left position to allow space for the divider
+                        left: 16, // Add padding from left
+                        right: 16, // Add padding from right
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 1.5,
+                                color: Colors.grey[300],
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Text(
+                                'Phần 2',
+                                style: TextStyle(
+                                  color: Colors.grey[500],
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                height: 1.0,
+                                color: Colors.grey[300],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      ...buttons2.map((button) {
+                        return Positioned(
+                          left: startX + button.xOffset,
+                          top: startY + button.yOffset,
+                          child: button,
+                        );
+                      }).toList(),
                     ],
                   );
                 },
               ),
-            ),
+            )
           ],
         ),
       ),
