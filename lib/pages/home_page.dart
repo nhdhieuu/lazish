@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:lazish/pages/learning_path_page.dart';
 import 'package:lazish/pages/edit_profile_page.dart';
 import 'package:lazish/pages/exercise_page.dart';
 import 'package:lazish/pages/profile_page.dart';
@@ -129,13 +130,13 @@ class _HomePageState extends State<HomePage> {
             title: 'Động vật',
             buttonText: 'View',
             imagePath: 'assets/animal.png',
-            progress: 15,
+            progress: 13,
             total: 15,
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ExercisePage(),
+                  builder: (context) => LearningPathPage(title: "Động vật", color: Color(0xffA1D7FF),),
                 ),
               );
             },
@@ -151,7 +152,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ExercisePage(),
+                  builder: (context) => LearningPathPage(title: "Thành phố", color: Color.fromARGB(255, 68, 236, 53),),
                 ),
               );
             },
@@ -167,7 +168,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ExercisePage(),
+                  builder: (context) => LearningPathPage(title: "Chữ cái", color: Color(0xffFFDA35),),
                 ),
               );
             },
@@ -183,7 +184,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ExercisePage(),
+                  builder: (context) => LearningPathPage(title: "Thiên nhiên", color: Color(0xffFF8D8D),),
                 ),
               );
             },

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lazish/pages/exercise_page.dart';
 import 'package:lazish/pages/home_page.dart';
 import 'package:lazish/pages/profile_page.dart';
 
