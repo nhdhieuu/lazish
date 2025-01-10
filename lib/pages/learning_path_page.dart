@@ -145,6 +145,7 @@ class _LevelScreenState extends State<LearningPathPage> {
                 const Text(
                   '4',
                   style: TextStyle(
+                    fontSize: 18,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
@@ -170,6 +171,7 @@ class _LevelScreenState extends State<LearningPathPage> {
                 const Text(
                   '957',
                   style: TextStyle(
+                    fontSize: 18,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),

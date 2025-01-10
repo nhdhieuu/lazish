@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
         titleTextStyle: TextStyle(fontSize: 16),
         automaticallyImplyLeading: false,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
               onTap: () {
@@ -67,22 +68,33 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            const Spacer(),
-            // Ngọn lửa và số
+            const SizedBox(width: 8,),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                InkWell(
-                  onTap: () {
-                    showChallengeTrackerBottomSheet(context);
-                  },
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/fire.png', // Đường dẫn đến hình biểu tượng
-                      width: 24,
-                      height: 24,
-                      fit: BoxFit.cover,
-                    ),
+                Text(
+                  "Hi, Hiếu",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              width: 40,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ClipOval(
+                  child: Image.asset(
+                    'assets/fire.png', // Đường dẫn đến hình biểu tượng
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(width: 6),
@@ -90,14 +102,16 @@ class _HomePageState extends State<HomePage> {
                   '4',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Color(0xFFD0C6FE),
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-            const SizedBox(width: 40),
             // Hình lục giác và số
+            const SizedBox(
+              width: 40,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -114,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                   '957',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Color(0xFFD0C6FE),
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
