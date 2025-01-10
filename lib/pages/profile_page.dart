@@ -1,7 +1,9 @@
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lazish/pages/edit_profile_page.dart';
 import 'package:lazish/pages/saved_reels_page.dart';
+import 'package:lazish/pages/welcome_page.dart';
 
 import '../widgets/chart.dart';
 
@@ -27,11 +29,32 @@ class ProfilePage extends StatelessWidget {
                     ),
                   );
                 },
-                child: Image.asset(
-                  "assets/update_profile.png",
-                  width: 30,
-                  height: 30,
+                child: const Icon(
+                  Icons.settings,
+                  color: Color(0xFF494949),
                 ),
+              ),
+              const SizedBox(width: 8),
+              IconButton(
+                icon: const Icon(
+                  Icons.logout,
+                  color: Color(0xFFFA9898),
+                ),
+                onPressed: () {
+                  ElegantNotification.success(
+                    title:  Text("Đăng xuất thành công"),
+                    description:  Text(" Hẹn gặp lại! "),
+                    onDismiss: () {
+                      print('Message when the notification is dismissed');
+                    },
+                  ).show(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WelcomePage(),
+                    ),
+                  );
+                },
               ),
             ],
           ),

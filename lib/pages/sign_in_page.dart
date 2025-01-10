@@ -1,3 +1,6 @@
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
+import 'package:elegant_notification/resources/stacked_options.dart';
 import 'package:flutter/material.dart';
 import 'package:lazish/pages/forgot_password_page.dart';
 import 'package:lazish/pages/main_layout_page.dart';
@@ -19,6 +22,20 @@ class _SignInPageState extends State<SignInPage> {
   void _handleSignIn() {
     if (_formKey.currentState!.validate()) {
       // Nếu form hợp lệ, chuyển đến trang chính
+      ElegantNotification.success(
+                  title:  Text("Đăng nhập thành công"),
+                  description:  Text("Chào mừng bạn đến với Lazish!"),
+                  onDismiss: () {
+                    print('Message when the notification is dismissed');
+                  },
+                ).show(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainLayoutPage(),
+                  ),
+                );
+              },
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -186,6 +203,7 @@ class _SignInPageState extends State<SignInPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
             child: ElevatedButton(
+
               onPressed: _handleSignIn,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xff6949ff),
