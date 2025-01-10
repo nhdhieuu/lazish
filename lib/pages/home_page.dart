@@ -24,15 +24,19 @@ class _HomePageState extends State<HomePage> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
       ),
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: const SingleChildScrollView(
-          child:
+      builder: (context) =>
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery
+                  .of(context)
+                  .viewInsets
+                  .bottom,
+            ),
+            child: const SingleChildScrollView(
+              child:
               ChallengeContent(), // Sử dụng ChallengeContent như bạn định nghĩa
-        ),
-      ),
+            ),
+          ),
     );
   }
 
@@ -89,12 +93,17 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ClipOval(
-                  child: Image.asset(
-                    'assets/fire.png', // Đường dẫn đến hình biểu tượng
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.cover,
+                InkWell(
+                  onTap: () {
+                    showChallengeTrackerBottomSheet(context);
+                  },
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/fire.png', // Đường dẫn đến hình biểu tượng
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 6),
@@ -150,7 +159,9 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LearningPathPage(title: "Động vật", color: Color(0xffA1D7FF),),
+                  builder: (context) =>
+                      LearningPathPage(
+                        title: "Động vật", color: Color(0xffA1D7FF),),
                 ),
               );
             },
@@ -166,7 +177,9 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LearningPathPage(title: "Thành phố", color: Color.fromARGB(255, 68, 236, 53),),
+                  builder: (context) =>
+                      LearningPathPage(title: "Thành phố",
+                        color: Color.fromARGB(255, 68, 236, 53),),
                 ),
               );
             },
@@ -182,7 +195,9 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LearningPathPage(title: "Chữ cái", color: Color(0xffFFDA35),),
+                  builder: (context) =>
+                      LearningPathPage(
+                        title: "Chữ cái", color: Color(0xffFFDA35),),
                 ),
               );
             },
@@ -198,7 +213,9 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LearningPathPage(title: "Thiên nhiên", color: Color(0xffFF8D8D),),
+                  builder: (context) =>
+                      LearningPathPage(
+                        title: "Thiên nhiên", color: Color(0xffFF8D8D),),
                 ),
               );
             },

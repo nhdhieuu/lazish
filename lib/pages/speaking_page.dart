@@ -7,7 +7,10 @@ import 'package:speech_to_text/speech_to_text.dart';
 class SpeakingPage extends StatefulWidget {
   final VoidCallback onContinue;
 
-  const SpeakingPage({super.key, required this.onContinue,});
+  const SpeakingPage({
+    super.key,
+    required this.onContinue,
+  });
 
   @override
   State<SpeakingPage> createState() => _SpeakingPageState();
@@ -115,7 +118,6 @@ class _SpeakingPageState extends State<SpeakingPage> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                     // Spacer to push button to bottom
@@ -201,7 +203,7 @@ class _SpeakingPageState extends State<SpeakingPage> {
                             ),
                             SizedBox(width: 8),
                             Text(
-                              'Sai!',
+                              'Sai mất rồi 😞!',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -210,7 +212,6 @@ class _SpeakingPageState extends State<SpeakingPage> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                     SizedBox(height: 16),
@@ -222,41 +223,63 @@ class _SpeakingPageState extends State<SpeakingPage> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 8),
-                    Text(
-                      "Tôi đi bộ và cô ấy bơi.",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    const SizedBox(
+                      height: 16,
                     ),
-                    SizedBox(height: 40),
+
                     // Continue Button
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
-                          padding: EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: Text(
+                              'THỬ LẠI',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xFFF65555),
+                              ),
+                            ),
                           ),
                         ),
-                        child: Text(
-                          'TIẾP TỤC',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFFF65555),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              widget.onContinue();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: Text(
+                              'TIẾP TỤC',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xFFF65555),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -413,7 +436,35 @@ class _SpeakingPageState extends State<SpeakingPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    _showSuccessBottomSheet(context);
+                    widget.onContinue();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF6949FF),
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                  ),
+                  child: Text(
+                    'Tôi không thể nói lúc này! ',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_wordSpoken == "the call is from your mother") {
+                      _showSuccessBottomSheet(context);
+                    } else {
+                      _showErrorBottomSheet(context);
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF6949FF),
