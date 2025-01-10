@@ -23,19 +23,19 @@ class _SignInPageState extends State<SignInPage> {
     if (_formKey.currentState!.validate()) {
       // Nếu form hợp lệ, chuyển đến trang chính
       ElegantNotification.success(
-                  title:  Text("Đăng nhập thành công"),
-                  description:  Text("Chào mừng bạn đến với Lazish!"),
-                  onDismiss: () {
-                    print('Message when the notification is dismissed');
-                  },
-                ).show(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MainLayoutPage(),
-                  ),
-                );
-              },
+        title: Text("Đăng nhập thành công"),
+        description: Text("Chào mừng bạn đến với Lazish!"),
+        onDismiss: () {
+          print('Message when the notification is dismissed');
+        },
+      ).show(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MainLayoutPage(),
+        ),
+      );
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -203,7 +203,6 @@ class _SignInPageState extends State<SignInPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
             child: ElevatedButton(
-
               onPressed: _handleSignIn,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xff6949ff),
