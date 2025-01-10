@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                Text( 
                   "Hi, Hiếu",
                   style: const TextStyle(
                     color: Colors.white,

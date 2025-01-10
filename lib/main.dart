@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:lazish/pages/main_layout_page.dart';
+import 'package:lazish/pages/reel.dart';
 
 
 void main() {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MainLayoutPage(),
+      home: ReelPage(),
     );
   }
 }
