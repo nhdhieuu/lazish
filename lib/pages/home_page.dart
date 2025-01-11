@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _isVisible = true; // Biến trạng thái để kiểm tra hiển thị
   void showChallengeTrackerBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -24,19 +25,15 @@ class _HomePageState extends State<HomePage> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
       ),
-      builder: (context) =>
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery
-                  .of(context)
-                  .viewInsets
-                  .bottom,
-            ),
-            child: const SingleChildScrollView(
-              child:
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: const SingleChildScrollView(
+          child:
               ChallengeContent(), // Sử dụng ChallengeContent như bạn định nghĩa
-            ),
-          ),
+        ),
+      ),
     );
   }
 
@@ -62,7 +59,6 @@ class _HomePageState extends State<HomePage> {
                 );
               },
               child: ClipOval(
-
                 child: Image.asset(
                   'assets/avatar.png', // Đường dẫn đến hình quốc kỳ
                   width: 30,
@@ -72,13 +68,15 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            const SizedBox(width: 8,),
+            const SizedBox(
+              width: 8,
+            ),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Hi, Hiếu",
+                  "Hi, Hoàng",
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -146,80 +144,112 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(12.0),
+      body: Column(
         children: [
-          TopicCard(
-            title: 'Động vật',
-            buttonText: 'View',
-            imagePath: 'assets/animal.png',
-            progress: 13,
-            total: 15,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      LearningPathPage(
-                        title: "Động vật", color: Color(0xffA1D7FF),),
+          _isVisible
+              ? GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isVisible = false; // Ẩn container khi onTap
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    color: const Color(0xFF2AD699),
+                    child: const Text(
+                      'Bạn đã có 4 ngày chăm chỉ, đừng đánh mất nó hôm nay 🔥🔥🔥',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                )
+              : SizedBox.shrink(),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(12.0),
+              children: [
+                TopicCard(
+                  title: 'Động vật',
+                  buttonText: 'View',
+                  imagePath: 'assets/animal.png',
+                  progress: 13,
+                  total: 15,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LearningPathPage(
+                          title: "Động vật",
+                          color: Color(0xffA1D7FF),
+                        ),
+                      ),
+                    );
+                  },
+                  color: const Color(0xffA1D7FF),
                 ),
-              );
-            },
-            color: const Color(0xffA1D7FF),
-          ),
-          TopicCard(
-            title: 'Thành phố',
-            buttonText: 'Next',
-            imagePath: 'assets/city.png',
-            progress: 9,
-            total: 15,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      LearningPathPage(title: "Thành phố",
-                        color: Color.fromARGB(255, 68, 236, 53),),
+                TopicCard(
+                  title: 'Thành phố',
+                  buttonText: 'Next',
+                  imagePath: 'assets/city.png',
+                  progress: 9,
+                  total: 15,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LearningPathPage(
+                          title: "Thành phố",
+                          color: Color.fromARGB(255, 68, 236, 53),
+                        ),
+                      ),
+                    );
+                  },
+                  color: const Color.fromARGB(255, 68, 236, 53),
                 ),
-              );
-            },
-            color: const Color.fromARGB(255, 68, 236, 53),
-          ),
-          TopicCard(
-            title: 'Chữ cái',
-            buttonText: 'Next',
-            imagePath: 'assets/abc.png',
-            progress: 9,
-            total: 15,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      LearningPathPage(
-                        title: "Chữ cái", color: Color(0xffFFDA35),),
+                TopicCard(
+                  title: 'Chữ cái',
+                  buttonText: 'Next',
+                  imagePath: 'assets/abc.png',
+                  progress: 9,
+                  total: 15,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LearningPathPage(
+                          title: "Chữ cái",
+                          color: Color(0xffFFDA35),
+                        ),
+                      ),
+                    );
+                  },
+                  color: const Color(0xffFFDA35),
                 ),
-              );
-            },
-            color: const Color(0xffFFDA35),
-          ),
-          TopicCard(
-            title: 'Thiên nhiên',
-            buttonText: 'Start',
-            imagePath: 'assets/nature.png',
-            progress: 0,
-            total: 15,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      LearningPathPage(
-                        title: "Thiên nhiên", color: Color(0xffFF8D8D),),
+                TopicCard(
+                  title: 'Thiên nhiên',
+                  buttonText: 'Start',
+                  imagePath: 'assets/nature.png',
+                  progress: 0,
+                  total: 15,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LearningPathPage(
+                          title: "Thiên nhiên",
+                          color: Color(0xffFF8D8D),
+                        ),
+                      ),
+                    );
+                  },
+                  color: const Color(0xffFF8D8D),
                 ),
-              );
-            },
-            color: const Color(0xffFF8D8D),
+              ],
+            ),
           ),
         ],
       ),
